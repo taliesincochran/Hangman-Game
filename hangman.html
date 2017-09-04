@@ -6,10 +6,9 @@
 	<link type='text/javaScript' src='hangman.js'>
 	<link type='text/css' src='style.css'>
 </head>
-<body>
-<header class=title>Hangman</header>
-<p id=game>Press any letter to begin</p>
-</body>
+<body id=game>
+<h1>Hangman: Geographic Edition</h1>
+<p >Press any letter to begin</p>
 <script>
 // Define variables at initial value
 // Arrays of Random Words
@@ -27,19 +26,10 @@ var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", 
 // Array of used letters
 var usedLetters = [];
 // Other Variables
-var Lives = 9;
-
-// var randomWord = " ";
-// var letterIndex = " ";
-
-// Set initial html
-
- // Set the inner HTML contents of the #game div to html string
-
+var Lives = 6;
 // Function to start game when key is pressed
-document.onkeyup = function(event)
-{
-// maybe a do while lives are > 0. This way values return to normal at end
+document.onkeyup = function(event) {
+//set user guess to key pressed and log guess
     var userGuess = event.key;
     console.log(userGuess);
 // Function to choose random catagory using math.random and math.floor
@@ -48,8 +38,8 @@ document.onkeyup = function(event)
     console.log(catagoryChoosen);
 // function to get hint for user
     var userHint = hints[catagories.indexOf(catagoryChoosen)];
-    console.log(userHint);
     console.log(catagoryChoosen);
+    console.log(userHint);    
 // Function to choose random word from the catagory
     if (catagoryChoosen === catagories[0])
 	{
@@ -76,12 +66,14 @@ document.onkeyup = function(event)
 		var randomWord = worldCapitals[Math.floor(Math.random() * catagoryChoosen.length)];
 		console.log(randomWord);
 	}
+//change case of randomWord to upper case
+    var randomWordlc = randomWord.toLowerCase();
+    console.log(randomWordlc);
 // Display word as blanks	
-	console.log(randomWord.length);
 	var blankWord = [];
-	for (i = 0; i < randomWord.length; i++) 
+	for (i = 0; i < randomWordlc.length; i++) 
 	{ 
-    	if (randomWord[i] !== " ")
+    	if (randomWordlc[i] !== " ")
     	{ 
     		blankWord.push("_");
     	}
@@ -95,67 +87,96 @@ document.onkeyup = function(event)
     var wins = 0;
     var losses = 0;
     var usedLetters = [];
+    // var displayLetters = ""; 
     var lives = 6; 
     var html =
-          "<p>Welcome to Hangman, Geographic Edition</p>" +
+          "<h1>Hangman: Geographic Edition</h1>" +
           "<p>press any letter to continue</p>" +
+          "<h3>Hint</h3>" + userHint + "</h3>" +
           "<p>" + blankImage +"</p>" +
-          "<p>Lives:" + lives + "</p>" +
-          "<p>Used letters: " + usedLetters.join (" "); + "</p>" +
+          "<p>Guesses Left:" + lives + "</p>" +
+          "<p>Used letters: " + usedLetters.join(",") + "</p>" +
           "<p>Wins: " + wins + "</p>" +
           "<p>Losses: " + losses + "</p>"
           
-
         // Set the inner HTML contents of the #game div to our html string
-    document.querySelector("#game").innerHTML = html;
-    // for (lives = 6; lives > 0; lives=lives) 
-    // {
-    // 	document.onkeyup = function (event) 
-    // 	{
-    // 		var userGuess = event.key;
-    // 		console.log(userGuess);
-    // 		if (letters.Contains(userGuess.toLowerCase) === false)
-    // 		{
-    // 			console.log("not a valid guess");
-    // 		}
+    document.querySelector("#game").innerHTML = html
+    //Set up function to compare future keyup events to randomwordlc
+    document.onkeyup = function (event2) {
+//     //run loop to compre event to random word    
+//         do {
+//         //set keyup event to user guess
+        	var userGuess = event2.key;
+        	console.log(userGuess);
+//             //if else to see if letter is a letter
+        	if (letters.includes(userGuess.toLowerCase()) === false) {
+        		console.log("not a valid guess");
+                var html =
+                   "<h1>Hangman: Geographic Edition</h1>" +
+                    "<p>press any letter to continue</p>" +
+                    "<h3>Hint</h3>" + userHint + "</h3>" +
+                    "<p>" + blankImage +"</p>" +
+                    "<p>Guesses Left:" + lives + "</p>" +
+                    "<p>Used letters: " + usedLetters.join(",") + "</p>" +
+                    "<p>Wins: " + wins + "</p>" +
+                    "<p>Losses: " + losses + "</p>"
+        	}
+    	    //else if the letter is in the random word splice out the blank corrisponding to the index number of the letter in the random word
+            else if (randomWordlc.indexOf(userGuess.toLowerCase()) !== -1) {
+                console.log(randomWordlc.indexOf(userGuess.toLowerCase()));
+                blankWord.splice(randomWordlc.indexOf(userGuess.toLowerCase()), 1, userGuess.toLowerCase());
+                letters.splice(letters.indexOf(userGuess.toLowerCase()), 1);
+                blankImage = blankWord.join(" ");
+                console.log(blankImage)
+                var html =
+        	       "<h1>Hangman: Geographic Edition</h1>" +
+                    "<p>press any letter to continue</p>" +
+                    "<h3>Hint</h3>" + userHint + "</h3>" +
+                    "<p>" + blankImage +"</p>" +
+                    "<p>Guesses Left:" + lives + "</p>" +
+                    "<p>Used letters: " + usedLetters.join(",") + "</p>" +
+                    "<p>Wins: " + wins + "</p>" +
+                    "<p>Losses: " + losses + "</p>"
+    		        document.querySelector("#game").innerHTML = html;
+    	    }
+    	    else
+		    {
+    	        lives--
+                usedLetters.push(userGuess.toLowerCase());
+                letters.splice(letters.indexOf(userGuess.toLowerCase()), 1);
+                // var displayLetters = usedLetters.join(",")
+                console.log(usedLetters.join(","));
+                var html =
+                   "<h1>Hangman: Geographic Edition</h1>" +
+                    "<p>press any letter to continue</p>" +
+                    "<h3>Hint</h3>" + userHint + "</h3>" +
+                    "<p>" + blankImage +"</p>" +
+                    "<p>Guesses Left:" + lives + "</p>" +
+                    "<p>Used letters: " + usedLetters.join(",") + "</p>" +
+                    "<p>Wins: " + wins + "</p>" +
+                    "<p>Losses: " + losses + "</p>"
+    	    }
+            
+//             }
+//         break
+//         }
+// 	    while (lives > 0);
 
-    // 		else if (randomWord.Contains(userGuess.toLowerCase) || randomWord.Contains(userGuess.toUppercase))
-    // 		{
-    // 			blankImage.splice(randomWord.indexOf(userGuess.toLowerCase), 1);
-    // 			usedLetters.push(userGuess.toLowerCase);
-    // 			var html =
-    //       		"<p>Welcome to Hangman, Geographic Edition</p>" +
-    //       		"<p>press any letter to continue</p>" +
-    //       		"<p>" + blankImage +"</p>" +
-    //       		"<p>Chances Left:" + lives + "</p>" +
-    //       		"<p>Used letters: " + usedLetters.join (" "); + "</p>" +
-    //       		"<p>Wins: " + wins + "</p>" +
-    //       		"<p>Losses: " + losses + "</p>"
-    // 			document.querySelector("#game").innerHTML = html;
-    // 		}
-    // 		else
-    // 		{
-    // 			lives--
-    // 		};
-    // 	};
-    // };
-};
-
-
-    // document.onkeyup = function (event) {
-
-
-
-
-
-
-
-
-
-// Function to display hint using html as var
- // Function to get user guess by capturing key.
-
-
+//         if (lives === 0) {
+//             var html =
+//                 "<h1>Game Over<h1>"
+//         }
+//         else if (randomWordlc === blankImage) {
+//             var html =
+//                 "<h1>You Win<h1>"
+//         }
+//         else {
+//             console.log("something went wrong");
+//         }
+//     }
+}
+}
 
 </script>
+</body>
 </html>
