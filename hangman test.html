@@ -2,19 +2,13 @@
 <html>
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-    <title>Hangman</title>
-    <link type='text/javaScript' src='hangman.js'>
-    <link type='text/css' src='style.css'>
+<title>Hangman</title>
+<link type='text/css' src='style.css'>
 </head>
 <body>
-<canvas id="myCanvas" width="200" height="100"></canvas>
-<div id="game">
-    <h1>Hangman: Geographic Edition</h1>
-    <p >Press any letter to begin</p>
-</div>   
-<div>
-<h1 id="winStatus"></h1>
-</div>
+
+<header class=title>Hangman</header>
+<p id=game>Press any letter to begin</p>
 <script>
 // Define variables at initial value
 // Arrays of Random Words
@@ -32,173 +26,97 @@ var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", 
 // Array of used letters
 var usedLetters = [];
 // Other Variables
-var Lives = 6;
-var randomWord = "";
-// var randomWord = "";
+var Lives = 9;
+var userGuess = "";
 var userHint = "";
-var blankWord = [];
+var blankWord = "";
 var blankImage = "";
+var random1 = "";
+var randomWord = "";
 var wins = 0;
 var losses = 0;
 var usedLetters = [];
-var usedImage = "";
 var lives = 6; 
-var html = "";
-// function to get random word
-var getWord = function (){
-    var random1 = Math.floor(Math.random() * catagories.length);
-    var catagoryChoosen = catagories[random1];
+var html =
+          "<p>Welcome to Hangman, Geographic Edition</p>" +
+          "<p>press any letter to continue</p>" +
+          "<p>" + blankImage +"</p>" +
+          "<p>Hint:" + userHint + "</p>" +
+          "<p>Lives:" + lives + "</p>" +
+          "<p>Used letters: " + usedLetters.join (" "); + "</p>" +
+          "<p>Wins: " + wins + "</p>" +
+          "<p>Losses: " + losses + "</p>"
+var catagoryChoosen = "";
+// Set initial html
+// Set the inner HTML contents of the #game div to html string
+// Function to start game when key is pressed
+document.onkeyup = function event(event)
+{
+// maybe a do while lives are > 0. This way values return to normal at end
+    userGuess = event.key;
+    console.log(userGuess);
+// Function to choose random catagory using math.random and math.floor
+    random1 = Math.floor(Math.random() * catagories.length);
+    catagoryChoosen = catagories[random1];
     console.log(catagoryChoosen);
-    // function to get hint for user
+// function to get hint for user
     userHint = hints[catagories.indexOf(catagoryChoosen)];
-    console.log(userHint);    
-    // Function to choose random word from the catagory
-    if (catagoryChoosen === catagories[0]) {
-            randomWord = usCityNames[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-            console.log(randomWord);
+    console.log(userHint);
+    console.log(catagoryChoosen);
+// Function to choose random word from the catagory
+    if (catagoryChoosen === catagories[0])
+    {
+        randomWord = usCityNames[Math.floor(Math.random() * catagoryChoosen.length)];
+        console.log(randomWord);
     }
-    else if (catagoryChoosen === catagories[1]) {
-            randomWord = countryList[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-            console.log(randomWord);
+    else if (catagoryChoosen === catagories[1])
+    {
+        randomWord = countryList[Math.floor(Math.random() * catagoryChoosen.length)];
+        console.log(randomWord);
     }
-    else if (catagoryChoosen === catagories[2]) {
-            randomWord = usStatesList[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-            console.log(randomWord);
+    else if (catagoryChoosen === catagories[2])
+    {
+        randomWord = usStatesList[Math.floor(Math.random() * catagoryChoosen.length)];
+        console.log(randomWord);
     }
-    else if (catagoryChoosen === catagories[3]) {
-    randomWord = seasAndOceans[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-    console.log(randomWord);
+    else if (catagoryChoosen === catagories[3])
+    {
+        randomWord = seasAndOceans[Math.floor(Math.random() * catagoryChoosen.length)];
+        console.log(randomWord);
     }
-    else {
-            randomWord = worldCapitals[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-            console.log(randomWord);
+    else 
+    {
+        randomWord = worldCapitals[Math.floor(Math.random() * catagoryChoosen.length)];
+        console.log(randomWord);
     }
-    for (i = 0; i < randomWord.length; i++) { 
-        if (randomWord[i] !== " ") { 
-                blankWord.push("_");
+// Display word as blanks   
+    console.log(randomWord.length);
+    blankWord = [];
+    for (i = 0; i < randomWord.length; i++) 
+    { 
+        if (randomWord[i] !== " ")
+        { 
+            blankWord.push("_");
         }
-        else {
+        else 
+        {
             blankWord.push(" ");
         }
     }
-//Joining array into an string of _ 's
     blankImage = blankWord.join (" ");
     console.log(blankImage);
-// Setting initial html
-    html = "<h1>Hangman: Geographic Edition</h1>" + "<p>press any letter to continue</p>" + "<h3>Hint</h3>" + userHint + "</h3>" + "<p>" + blankImage +"</p>" + "<p>Guesses Left:" + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>";
-    document.querySelector("#game").innerHTML = html
+    var html =
+          "<p>Welcome to Hangman, Geographic Edition</p>" +
+          "<p>press any letter to continue</p>" +
+          "<p>" + blankImage +"</p>" +
+          "<p>Hint:" + userHint + "</p>" +
+          "<p>Lives:" + lives + "</p>" +
+          "<p>Used letters: " + usedLetters.join (" "); + "</p>" +
+          "<p>Wins: " + wins + "</p>" +
+          "<p>Losses: " + losses + "</p>"
+    document.querySelector("#game").innerHTML = html;
+  
 }
-
-// Function to start game when key is pressed. Game restarts at lives = 0
-     
-    document.onkeyup = function (event) {
-        var start = event.key;
-        console.log(randomWord);
-    // Function to choose random catagory using math.random and math.floor
-        getWord();
-    //     var random1 = Math.floor(Math.random() * catagories.length);
-    //     var catagoryChoosen = catagories[random1];
-    //     console.log(catagoryChoosen);
-    // // function to get hint for user
-    //     userHint = hints[catagories.indexOf(catagoryChoosen)];
-    //     console.log(userHint);    
-    // // Function to choose random word from the catagory
-    //     if (catagoryChoosen === catagories[0]) {
-    //         randomWord = usCityNames[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-    //         console.log(randomWord);
-    //     }
-    //     else if (catagoryChoosen === catagories[1]) {
-    //         randomWord = countryList[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-    //         console.log(randomWord);
-    //     }
-    //     else if (catagoryChoosen === catagories[2]) {
-    //         randomWord = usStatesList[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-    //         console.log(randomWord);
-    //     }
-    //     else if (catagoryChoosen === catagories[3]) {
-    //     randomWord = seasAndOceans[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-    //     console.log(randomWord);
-    //     }
-    //     else {
-    //         randomWord = worldCapitals[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-    //         console.log(randomWord);
-    //     }
-    //     for (i = 0; i < randomWord.length; i++) { 
-    //         if (randomWord[i] !== " ") { 
-    //             blankWord.push("_");
-    //         }
-    //         else {
-    //             blankWord.push(" ");
-    //         }
-    //     }
-    // //Joining array into an string of _ 's
-    //     blankImage = blankWord.join (" ");
-    //     console.log(blankImage);
-    // // Setting initial html
-    //     html = "<h1>Hangman: Geographic Edition</h1>" + "<p>press any letter to continue</p>" + "<h3>Hint</h3>" + userHint + "</h3>" + "<p>" + blankImage +"</p>" + "<p>Guesses Left:" + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>";
-    //     document.querySelector("#game").innerHTML = html
-        
-        document.onkeyup = function (event2) {
-    //set keyup event to user guess
-        userGuess = event2.key;
-        console.log(userGuess);
-    //run loop to compre event to random word 
-    //if else to see if letter is a letter
-        if (letters.includes(userGuess.toLowerCase()) === false) {
-                console.log("not a valid guess");
-        }
-    //else if the letter is in the random word splice out the blank corrisponding to the index number of the letter in the random word
-        else if (randomWord.indexOf(userGuess.toLowerCase()) !== -1) {       
-            for (i = 0; randomWord.indexOf(userGuess.toLowerCase(), i) !== -1; i++) {
-            blankWord.splice(randomWord.indexOf(userGuess.toLowerCase(), i), 1, userGuess.toLowerCase());
-            blankImage = blankWord.join(" ");
-            console.log(blankImage)
-            html = "<h1>Hangman: Geographic Edition</h1>" + "<p>press any letter to continue</p>" + "<h3>Hint</h3>" + userHint + "</h3>" + "<p>" + blankImage +"</p>" + "<p>Guesses Left:" + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>";
-            document.querySelector("#game").innerHTML = html;
-                if (randomWord === blankWord) {
-                    wins++;
-                    html = "<h1>You Lose</p>";
-                    document.querySelector("#game").innerHTML = html;
-                }        
-            } 
-            if (blankImage === randomWord) {
-            var winStatus = "<h1>You Win<h1>"
-            document.querySelector("#game").innerHTML = winStatus;
-                    wins++;  
-            }
-        }
-        else {
-            if (lives > 1) {
-                lives--
-                if (usedLetters.indexOf(userGuess.toLowerCase()) === -1) {
-                    usedLetters.push(userGuess.toLowerCase());
-                    usedImage = usedLetters.join(',');
-                }
-                html = "<h1>Hangman: Geographic Edition</h1>" + "<p>press any letter to continue</p>" + "<h3>Hint</h3>" + userHint + "</h3>" + "<p>" + blankImage +"</p>" + "<p>Guesses Left:" + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>"
-            }
-            else {
-                html = "<h1>You Lose</p>";
-                document.querySelector("#game").innerHTML = html;
-                losses++;
-                var usedLetters = [];
-                // Other Variables
-                var randomWord = "";
-                var userHint = "";
-                var blankWord = [];
-                var blankImage = "";
-                var usedLetters = [];
-                var usedImage = "";
-                var lives = 6; 
-                var userGuess = "";
-                getWord();
-
-
-            }
-        }
-    }
-}
-    
-
 </script>
 </body>
 </html>
