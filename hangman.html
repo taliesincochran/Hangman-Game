@@ -1,204 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
     <title>Hangman</title>
-    <link type='text/javaScript' src='hangman.js'>
-    <link type='text/css' src='style.css'>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>
+    <link rel='stylesheet' type='text/css' href='assets/css/style.css'>
+    <title>Hangman: Geographic Edition</title>
 </head>
 <body>
-<canvas id="myCanvas" width="200" height="100"></canvas>
-<div id="game">
-    <h1>Hangman: Geographic Edition</h1>
-    <p >Press any letter to begin</p>
-</div>   
-<div>
-<h1 id="winStatus"></h1>
+<div class= 'container'>
+    <div class='row'>
+        <h1 class='pageheader'>Hangman: Geographic Edition</h1>
+    </div>
+    <div class='row'>
+        <div class='col-md-6 col-sm-12'>
+            <div class='row gametext' id='game'>
+                <p class=''>Pick a letter to play</p>
+                <p>Hint: </p> 
+                <p>Word: </p>
+                <p>Guesses Left: </p>
+                <p>Used letters: </p>
+                <p>Wins: 0</p>
+                <p>Losses: 0</p>
+                <p class='hiddenWin'>You Win</p>
+                <p class='hiddenLose'>You Lose</p>
+                <button class='btn btn-default btn-danger hidden' id='restart'>Click here start over!</button>
+            </div>
+        </div>
+        <div class='col-md-6 col-sm-12'>
+            <h2 class='canvasHeader'>I hope you know your geography...</h2>
+            <canvas id='hmCanvas'>
+            </canvas>
+        <div>
+    </div>
 </div>
-<script>
-// Define variables at initial value
-// Arrays of Random Words
-var usCityNames = ["Aberdeen", "Abilene", "Akron", "Albany", "Albuquerque", "Alexandria", "Amarillo", "Anaheim", "Anchorage", "Ann Arbor", "Arlington", "Arvada", "Asheville", "Athens", "Atlanta", "Atlantic City", "Augusta", "Aurora", "Austin", "Bakersfield", "Baltimore", "Baton Rouge", "Beaumont", "Bel Air", "Bellevue", "Berkeley", "Birmingham", "Bloomington", "Boise", "Boston", "Boulder", "Bridgeport", "Brownsville", "Buffalo", "Burbank", "Burlington", "Canton", "Cape Coral", "Cary", "Charleston", "Charlotte", "Chattanooga", "Chicago", "Cincinnati", "Clarksville", "Clearwater", "Cleveland", "Colorado Springs", "Columbia", "Columbus", "Concord", "Corpus Christi", "Dallas", "Dayton", "Daytona Beach", "Denton", "Denver", "Des Moines", "Detroit", "Duluth", "Durham", "El Paso", "Elizabeth", "Erie", "Eugene", "Fairfield", "Fargo", "Fayetteville", "Flint", "Fort Collins", "Fort Lauderdale", "Fort Worth", "Frederick", "Fresno", "Gainesville", "Gastonia", "Grand Rapids", "Green Bay", "Greensboro", "Greenville", "Hampton", "Harrisburg", "Henderson", "Hickory", "High Point", "Hollywood", "Honolulu", "Houston", "Huntington", "Huntsville", "Indianapolis", "Inglewood", "Irvine", "Irving", "Jackson", "Jacksonville", "Jefferson", "Jersey City", "Johnson City", "Kalamazoo", "Kansas City", "Knoxville", "Lafayette", "Lancaster", "Lansing", "Las Vegas", "Lewisville", "Lexington", "Lincoln", "Little Rock", "Long Beach", "Los Angeles", "Louisville", "Madison", "Memphis", "Miami", "Milwaukee", "Minneapolis", "Mobile", "Modesto", "Monroe", "Monterey", "Montgomery", "Myrtle Beach", "Naples", "Nashville", "New Haven", "New Orleans", "New York", "New York City", "Newark", "Newport News", "Norfolk", "Oakland", "Odessa", "Ogden", "Oklahoma City", "Olympia", "Omaha", "Orlando", "Panama City", "Pasadena", "Pensacola", "Peoria", "Philadelphia", "Phoenix", "Pittsburgh", "Plano", "Portland", "Portsmouth", "Providence", "Raleigh", "Reading", "Reno", "Richmond", "Roanoke", "Rochester", "Sacramento", "Saint Louis", "Saint Paul", "Salem", "Salt Lake City", "San Antonio", "San Bernardino", "San Diego", "San Francisco", "San Jose", "Santa Ana", "Santa Barbara", "Santa Clara", "Santa Cruz", "Santa Maria", "Santa Rosa", "Sarasota", "Savannah", "Scottsdale", "Scranton", "Seattle", "Sioux City", "Sioux Falls", "Spartanburg", "Spokane", "Springdale", "Springfield", "St. Louis", "St. Paul", "Stockton", "Syracuse", "Tacoma", "Tallahassee", "Tampa", "Thornton", "Toledo", "Topeka", "Trenton", "Tucson", "Tulsa", "Tuscaloosa", "Utica", "Virginia Beach", "Waco", "Washington", "Waterloo", "Westminster", "Wichita", "Wilmington", "Winston", "Worcester", "Yonkers", "York", "Youngstown"];
-var countryList = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Cayman Islands", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cruise Ship", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyzistan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Samoa", "San Marino", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "St Kitts and Nevis", "St Lucia", "St Vincent", "St. Lucia", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "East Timor", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"];
-var usStatesList = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Guam", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virgin Island", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"];
-var seasAndOceans = ["Atlantic Ocean", "Pacific Ocean", "Indian Ocean", "Arctic Ocean", "Southern Ocean", "Mediteranean Sea", "Red Sea", "Persian Gulf", "North Sea", "Sea of Japan", "Carribean Sea", "Baltic Sea", "Irish Sea", "Adriatic Sea", "Aegean Sea", "Black Sea", "South China Sea"];
-var worldCapitals = ["Kabul", "Buenos Aires", "Canberra", "Vienna", "Dhaka", "Minsk", "Brussels", "Sarajevo", "Brasilia", "Sofia", "Ottawa", "Santiago", "Beijing", "Bogota", "San Jose", "Zagreb", "Havana", "Prague", "Kinshasa", "Copenhagen", "Santo Domingo", "Cairo", "San Salvador", "Asmara", "Addis Ababa", "Helsinki", "Paris", "Tbilisi", "Berlin", "Athens", "Georgetown", "Budapest", "Reykjavik", "New Delhi", "Jakarta", "Tehran", "Baghdad", "Jerusalem", "Rome", "Kingston", "Tokyo", "Amman", "Nairobi", "Bishkek", "Riga", "Beirut", "Monrovia", "Tripoli", "Vilnius", "Luxembourg City", "Kuala Lumpur", "Mexico City", "Ulaanbaatar", "Rabat", "Windhoek", "Kathmandu", "Amsterdam", "Wellington", "Pyongyang", "Oslo", "Muscat", "Islamabad", "Panama City", "Port Moresby", "Lima", "Manila", "Warsaw", "Lisbon", "San Juan", "Dublin", "Skopje", "Brazzaville", "Bucharest", "Moscow", "San Marino", "Riyadh", "Dakar", "Belgrade", "Freetown", "Singapore", "Bratislava", "Mogadishu", "Pretoria", "Seoul", "Madrid", "Khartoum", "Stockholm", "Bern", "Damascus", "Taipei", "Bangkok", "Tunis", "Ankara", "Kampala", "Kiev", "Abu Dhabi", "London", "Washington", "Montevideo", "Vatican City", "Caracas", "Hanoi"];
-//Array of word arrays
-var catagories = ["usCityNames", "countryList", "usStatesList", "seasAndOceans", "worldCapitals"];
-//Array of hints, matched to catagories array
-var hints = ["US City", "Nation", "US State", "Large Body of Water", "World Capitals"];
-// Array of potential letters
-var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-// Array of used letters
-var usedLetters = [];
-// Other Variables
-var Lives = 6;
-var randomWord = "";
-// var randomWord = "";
-var userHint = "";
-var blankWord = [];
-var blankImage = "";
-var wins = 0;
-var losses = 0;
-var usedLetters = [];
-var usedImage = "";
-var lives = 6; 
-var html = "";
-// function to get random word
-var getWord = function (){
-    var random1 = Math.floor(Math.random() * catagories.length);
-    var catagoryChoosen = catagories[random1];
-    console.log(catagoryChoosen);
-    // function to get hint for user
-    userHint = hints[catagories.indexOf(catagoryChoosen)];
-    console.log(userHint);    
-    // Function to choose random word from the catagory
-    if (catagoryChoosen === catagories[0]) {
-            randomWord = usCityNames[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-            console.log(randomWord);
-    }
-    else if (catagoryChoosen === catagories[1]) {
-            randomWord = countryList[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-            console.log(randomWord);
-    }
-    else if (catagoryChoosen === catagories[2]) {
-            randomWord = usStatesList[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-            console.log(randomWord);
-    }
-    else if (catagoryChoosen === catagories[3]) {
-    randomWord = seasAndOceans[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-    console.log(randomWord);
-    }
-    else {
-            randomWord = worldCapitals[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-            console.log(randomWord);
-    }
-    for (i = 0; i < randomWord.length; i++) { 
-        if (randomWord[i] !== " ") { 
-                blankWord.push("_");
-        }
-        else {
-            blankWord.push(" ");
-        }
-    }
-//Joining array into an string of _ 's
-    blankImage = blankWord.join (" ");
-    console.log(blankImage);
-// Setting initial html
-    html = "<h1>Hangman: Geographic Edition</h1>" + "<p>press any letter to continue</p>" + "<h3>Hint</h3>" + userHint + "</h3>" + "<p>" + blankImage +"</p>" + "<p>Guesses Left:" + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>";
-    document.querySelector("#game").innerHTML = html
-}
-
-// Function to start game when key is pressed. Game restarts at lives = 0
-     
-    document.onkeyup = function (event) {
-        var start = event.key;
-        console.log(randomWord);
-    // Function to choose random catagory using math.random and math.floor
-        getWord();
-    //     var random1 = Math.floor(Math.random() * catagories.length);
-    //     var catagoryChoosen = catagories[random1];
-    //     console.log(catagoryChoosen);
-    // // function to get hint for user
-    //     userHint = hints[catagories.indexOf(catagoryChoosen)];
-    //     console.log(userHint);    
-    // // Function to choose random word from the catagory
-    //     if (catagoryChoosen === catagories[0]) {
-    //         randomWord = usCityNames[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-    //         console.log(randomWord);
-    //     }
-    //     else if (catagoryChoosen === catagories[1]) {
-    //         randomWord = countryList[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-    //         console.log(randomWord);
-    //     }
-    //     else if (catagoryChoosen === catagories[2]) {
-    //         randomWord = usStatesList[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-    //         console.log(randomWord);
-    //     }
-    //     else if (catagoryChoosen === catagories[3]) {
-    //     randomWord = seasAndOceans[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-    //     console.log(randomWord);
-    //     }
-    //     else {
-    //         randomWord = worldCapitals[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
-    //         console.log(randomWord);
-    //     }
-    //     for (i = 0; i < randomWord.length; i++) { 
-    //         if (randomWord[i] !== " ") { 
-    //             blankWord.push("_");
-    //         }
-    //         else {
-    //             blankWord.push(" ");
-    //         }
-    //     }
-    // //Joining array into an string of _ 's
-    //     blankImage = blankWord.join (" ");
-    //     console.log(blankImage);
-    // // Setting initial html
-    //     html = "<h1>Hangman: Geographic Edition</h1>" + "<p>press any letter to continue</p>" + "<h3>Hint</h3>" + userHint + "</h3>" + "<p>" + blankImage +"</p>" + "<p>Guesses Left:" + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>";
-    //     document.querySelector("#game").innerHTML = html
-        
-        document.onkeyup = function (event2) {
-    //set keyup event to user guess
-        userGuess = event2.key;
-        console.log(userGuess);
-    //run loop to compre event to random word 
-    //if else to see if letter is a letter
-        if (letters.includes(userGuess.toLowerCase()) === false) {
-                console.log("not a valid guess");
-        }
-    //else if the letter is in the random word splice out the blank corrisponding to the index number of the letter in the random word
-        else if (randomWord.indexOf(userGuess.toLowerCase()) !== -1) {       
-            for (i = 0; randomWord.indexOf(userGuess.toLowerCase(), i) !== -1; i++) {
-            blankWord.splice(randomWord.indexOf(userGuess.toLowerCase(), i), 1, userGuess.toLowerCase());
-            blankImage = blankWord.join(" ");
-            console.log(blankImage)
-            html = "<h1>Hangman: Geographic Edition</h1>" + "<p>press any letter to continue</p>" + "<h3>Hint</h3>" + userHint + "</h3>" + "<p>" + blankImage +"</p>" + "<p>Guesses Left:" + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>";
-            document.querySelector("#game").innerHTML = html;
-                if (randomWord === blankWord) {
-                    wins++;
-                    html = "<h1>You Lose</p>";
-                    document.querySelector("#game").innerHTML = html;
-                }        
-            } 
-            if (blankImage === randomWord) {
-            var winStatus = "<h1>You Win<h1>"
-            document.querySelector("#game").innerHTML = winStatus;
-                    wins++;  
-            }
-        }
-        else {
-            if (lives > 1) {
-                lives--
-                if (usedLetters.indexOf(userGuess.toLowerCase()) === -1) {
-                    usedLetters.push(userGuess.toLowerCase());
-                    usedImage = usedLetters.join(',');
-                }
-                html = "<h1>Hangman: Geographic Edition</h1>" + "<p>press any letter to continue</p>" + "<h3>Hint</h3>" + userHint + "</h3>" + "<p>" + blankImage +"</p>" + "<p>Guesses Left:" + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>"
-            }
-            else {
-                html = "<h1>You Lose</p>";
-                document.querySelector("#game").innerHTML = html;
-                losses++;
-                var usedLetters = [];
-                // Other Variables
-                var randomWord = "";
-                var userHint = "";
-                var blankWord = [];
-                var blankImage = "";
-                var usedLetters = [];
-                var usedImage = "";
-                var lives = 6; 
-                var userGuess = "";
-                getWord();
-
-
-            }
-        }
-    }
-}
-    
-
-</script>
+<script src='assets/javascript/game.js'></script>
 </body>
 </html>
