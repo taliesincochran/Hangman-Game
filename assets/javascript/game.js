@@ -17,6 +17,7 @@ var usedLetters = [];
 var randomWord = "";
 var userHint = "";
 var blankWord = [];
+var blankWord2 = [];
 var blankImage = "";
 var wins = 0;
 var losses = 0;
@@ -31,13 +32,13 @@ var html = "<p>Pick a letter to play</p>" +
             "<p>Wins: " + wins + "</p>" +
             "<p>Losses: " + losses + "</p>";
 var c = document.getElementById('hmCanvas');
-c.width  = window.innerWidth;
-c.height = window.innerHeight;
+c.width  = 3*window.innerWidth;
+c.height = 3*window.innerHeight;
 var ctx = c.getContext("2d");
-
+//drawing the gallows
 var drawGallows = function () {
     ctx.strokeStyle = 'black';
-    ctx.lineWidth = '10';
+    ctx.lineWidth = '25';
     //top
     ctx.beginPath();
     ctx.moveTo(2*c.width/9,c.height/12);
@@ -64,9 +65,10 @@ var drawGallows = function () {
     ctx.lineTo(13*c.width/36,11*c.height/12);
     ctx.stroke();
 }
+//functions to draw the body
 var drawHead = function() {
     ctx.strokeStyle = 'black';
-    ctx.lineWidth = '5';
+    ctx.lineWidth = '15';
     ctx.beginPath();
     ctx.arc(c.width/2,7*c.height/24,c.height/12,0,2*Math.PI);
     ctx.stroke();
@@ -74,7 +76,7 @@ var drawHead = function() {
 var drawBody = function() {
     ctx.beginPath();
     ctx.strokeStyle = 'black';
-    ctx.lineWidth = '5';
+    ctx.lineWidth = '15';
     ctx.moveTo(c.width/2,3*c.height/8);
     ctx.lineTo(c.width/2,7*c.height/12);
     ctx.stroke();
@@ -82,7 +84,7 @@ var drawBody = function() {
 var drawLeftArm = function() {
     ctx.beginPath();
     ctx.strokeStyle = 'black';
-    ctx.lineWidth = '5';
+    ctx.lineWidth = '15';
     ctx.moveTo(c.width/2,11*c.height/24);
     ctx.lineTo(15*c.width/36,3*c.height/8);
     ctx.stroke();
@@ -90,7 +92,7 @@ var drawLeftArm = function() {
 var drawRightArm = function() {
     ctx.beginPath();
     ctx.strokeStyle = 'black';
-    ctx.lineWidth = '5';
+    ctx.lineWidth = '15';
     ctx.moveTo(c.width/2,11*c.height/24);
     ctx.lineTo(7*c.width/12,3*c.height/8);
     ctx.stroke();
@@ -98,7 +100,7 @@ var drawRightArm = function() {
 var drawLeftLeg = function() {
     ctx.beginPath();
     ctx.strokeStyle = 'black';
-    ctx.lineWidth = '5';
+    ctx.lineWidth = '15';
     ctx.moveTo(c.width/2,7*c.height/12);
     ctx.lineTo(4*c.width/9,3*c.height/4);
     ctx.stroke();
@@ -106,14 +108,14 @@ var drawLeftLeg = function() {
 var drawRightLeg = function() {
     ctx.beginPath();
     ctx.strokeStyle = 'black';
-    ctx.lineWidth = '5';
+    ctx.lineWidth = '15';
     ctx.moveTo(c.width/2,7*c.height/12);
     ctx.lineTo(10*c.width/18,3*c.height/4);
     ctx.stroke();
 }
 var drawFace = function () {
     ctx.strokeStyle = 'black';
-    ctx.lineWidth = '5';
+    ctx.lineWidth = '10';
     ctx.beginPath();
     ctx.arc(69*c.width/144,c.height/4,c.height/144,0,2*Math.PI);
     ctx.stroke();
@@ -124,10 +126,12 @@ var drawFace = function () {
     ctx.arc(c.width/2,c.height/3,c.height/48,Math.PI,0);
     ctx.stroke();
 }
+//Function to update text except for win or lose
 var changeText = function () {
     html = "<p>press any letter to continue</p>" + "<p>Hint: " + userHint + "</p>" + "<p>Word: " + blankImage +"</p>" + "<p>Guesses Left: " + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>";
     document.querySelector("#game").innerHTML = html;
 }
+//Function to get a random word and turn it into blanks
 var getWord = function () {
     var catagoryChoosen = catagories[Math.floor(Math.random() * catagories.length)];
     userHint = hints[catagories.indexOf(catagoryChoosen)];
@@ -150,7 +154,7 @@ var getWord = function () {
         if (randomWord[i] !== " ") { 
             blankWord.push("_");
         } else {
-            blankWord.push(" ");
+            blankWord.push("&nbsp;");
         }
     }
     blankImage = blankWord.join (" ");
@@ -209,6 +213,7 @@ var clearWord = function () {
         usedLetters = [];
         userHint = "";
         blankWord = [];
+        blankWord2 = [];
         blankImage = "";
         usedLetters = [];
         usedImage = "";
@@ -235,7 +240,7 @@ var onLose = function () {
     window.setTimeout(restart, 2000);
 }
 var checkWin = function () {
-    testWord = blankWord.join ("");
+    testWord = blankWord.join("").replace(/&nbsp;/gi,' ');
     if (randomWord === testWord) {
         youWin();        
     }
