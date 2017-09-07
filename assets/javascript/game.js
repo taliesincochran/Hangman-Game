@@ -33,7 +33,7 @@ var html = "<p>Pick a letter to play</p>" +
 // function to get random word
 var changeText = function () {
     html = "<p>press any letter to continue</p>" + "<p>Hint: " + userHint + "</p>" + "<p>Word: " + blankImage +"</p>" + "<p>Guesses Left: " + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>";
-        document.querySelector("#game").innerHTML = html;
+    document.querySelector("#game").innerHTML = html;
 }
 var getWord = function () {
     var catagoryChoosen = catagories[Math.floor(Math.random() * catagories.length)];
@@ -67,53 +67,62 @@ var getWord = function () {
 var checkMatch = function () {
     if (letters.includes(userGuess.toLowerCase()) === false) {
         console.log("not a valid guess");
-    } else if (randomWord.indexOf(userGuess.toLowerCase() !== -1)) {       
+    } else if (randomWord.indexOf(userGuess.toLowerCase()) !== -1) {       
         for (i = 0; randomWord.indexOf(userGuess.toLowerCase(), i) !== -1; i++) {
         blankWord.splice(randomWord.indexOf(userGuess.toLowerCase(), i), 1, userGuess.toLowerCase());
         blankImage = blankWord.join(" ");
         testWord = blankWord.join ("");
         console.log(blankImage)
-        changeText();
+        
         }
-    } else {
-        if (usedLetters.indexOf(userGuess.toLowerCase()) === -1) {
+    } else if (randomWord.indexOf(userGuess.toLowerCase()) === -1 && usedLetters.indexOf(userGuess.toLowerCase()) === -1) {
             usedLetters.push(userGuess.toLowerCase());
             usedImage = usedLetters.join(',');
             lives--;
+            console.log(usedImage);
         }
         changeText();
     }
-}
 
 var clearWord = function () {
-        var tempRandomWord = "";
-        var randomWord = "";
-        var usedLetters = [];
-        var userHint = "";
-        var blankWord = [];
-        var blankImage = "";
-        var usedLetters = [];
-        var usedImage = "";
-        var lives = 6; 
+        tempRandomWord = "";
+        randomWord = "";
+        usedLetters = [];
+        userHint = "";
+        blankWord = [];
+        blankImage = "";
+        usedLetters = [];
+        usedImage = "";
+        lives = 6;
+        changeText(); 
 }
 
 var restart = function () {
     clearWord();
     getWord();
 }
+var youWin = function () {
+        wins++; 
+        html = "<p>press any letter to continue</p>" + "<p>Hint: " + userHint + "</p>" + "<p>Word: " + blankImage +"</p>" + "<p>Guesses Left: " + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<h1>You Win!</p>";
+        document.querySelector("#game").innerHTML = html;
+        window.setTimeout(restart, 3000);
+}
+var onLose = function () {
+    losses++;
+    html = "<p>press any letter to continue</p>" + "<p>Hint: " + userHint + "</p>" + "<p>Word: " + blankImage +"</p>" + "<p>Guesses Left: " + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<h1>You Lose!</p>";
+    document.querySelector("#game").innerHTML = html;
+    window.setTimeout(restart, 3000);
+}
+
 var checkWin = function () {
     testWord = blankWord.join ("");
     if (randomWord === testWord) {
-        wins++;
-        alert("<h1>You Win</p>");
-        document.querySelector("#game").innerHTML = html;
-        restart();
+        youWin();        
     }
     else if (lives === 0) {
-        alert("You Lose!");
-        losses++;
-        restart();}
-    else {
+        onLose();
+        
+    } else {
         console.log("Choose the next letter");
     }
 }
