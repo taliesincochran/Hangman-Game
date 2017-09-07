@@ -134,8 +134,7 @@ var changeText = function () {
 //Function to get a random word and turn it into blanks
 var getWord = function () {
     var catagoryChoosen = catagories[Math.floor(Math.random() * catagories.length)];
-    userHint = hints[catagories.indexOf(catagoryChoosen)];
-    console.log(userHint);   
+    userHint = hints[catagories.indexOf(catagoryChoosen)];  
     var tempRandomWord = "";
     if (catagoryChoosen === catagories[0]) {
         tempRandomWord = usCityNames[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
@@ -149,7 +148,6 @@ var getWord = function () {
             tempRandomWord = worldCapitals[Math.floor(Math.random() * catagoryChoosen.length)].toLowerCase();
     }    
     randomWord = tempRandomWord.toLowerCase();
-    console.log(randomWord); 
     for (i = 0; i < randomWord.length; i++) { 
         if (randomWord[i] !== " ") { 
             blankWord.push("_");
@@ -158,9 +156,9 @@ var getWord = function () {
         }
     }
     blankImage = blankWord.join (" ");
-    console.log(blankImage);
     changeText();
 }
+//Function to draw body as guesses fail
 var execution = function () { 
     switch (lives) {
         case 6:
@@ -184,10 +182,10 @@ var execution = function () {
         break;
         case 0:
         drawRightLeg();
-
         break;
     }
 }
+//Function to see if guess matches a letter from the random word 
 var checkMatch = function () {
     if (letters.includes(userGuess.toLowerCase()) === false) {
         console.log("not a valid guess");
@@ -195,18 +193,16 @@ var checkMatch = function () {
         for (i = 0; randomWord.indexOf(userGuess.toLowerCase(), i) !== -1; i++) {
             blankWord.splice(randomWord.indexOf(userGuess.toLowerCase(), i), 1, userGuess.toLowerCase());
             blankImage = blankWord.join(" ");
-            testWord = blankWord.join ("");
-            console.log(blankImage)        
+            testWord = blankWord.join ("");      
         }
     } else if (randomWord.indexOf(userGuess.toLowerCase()) === -1 && usedLetters.indexOf(userGuess.toLowerCase()) === -1) {
             usedLetters.push(userGuess.toLowerCase());
             usedImage = usedLetters.join(',');
             lives--;
-            console.log(usedImage);
         }
         changeText();
     }
-
+//Function to reset variables.
 var clearWord = function () {
         tempRandomWord = "";
         randomWord = "";
@@ -220,37 +216,40 @@ var clearWord = function () {
         lives = 6;
         changeText(); 
 }
-
+//Restarts game
 var restart = function () {
     clearWord();
     ctx.clearRect(0, 0, c.width, c.height);
     drawGallows();
     getWord();
 }
+//Displays on win 
 var youWin = function () {
         wins++; 
         html = "<p>press any letter to continue</p>" + "<p>Hint: " + userHint + "</p>" + "<p>Word: " + blankImage +"</p>" + "<p>Guesses Left: " + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<h1>You Win!</p>";
         document.querySelector("#game").innerHTML = html;
         window.setTimeout(restart, 2000);
 }
+//Displays on loss
 var onLose = function () {
     losses++;
     html = "<p>press any letter to continue</p>" + "<p>Hint: " + userHint + "</p>" + "<p>Word: " + blankImage +"</p>" + "<p>Guesses Left: " + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<h1>You Lose!</p>";
     document.querySelector("#game").innerHTML = html;
     window.setTimeout(restart, 2000);
 }
+//Function to check if player won or lost
 var checkWin = function () {
     testWord = blankWord.join("").replace(/&nbsp;/gi,' ');
     if (randomWord === testWord) {
         youWin();        
-    }
-    else if (lives === 0) {
+    } else if (lives === 0) {
         onLose();
         
     } else {
         console.log("Choose the next letter");
     }
 }
+//What needs to happen to play
 document.addEventListener('DOMContentLoaded', function() {
     getWord();
     execution();
