@@ -30,7 +30,100 @@ var html = "<p>Pick a letter to play</p>" +
             "<p>Used letters: " + usedImage + "</p>" + 
             "<p>Wins: " + wins + "</p>" +
             "<p>Losses: " + losses + "</p>";
-// function to get random word
+var c = document.getElementById('hmCanvas');
+c.width  = window.innerWidth;
+c.height = window.innerHeight;
+var ctx = c.getContext("2d");
+
+var drawGallows = function () {
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = '10';
+    //top
+    ctx.beginPath();
+    ctx.moveTo(2*c.width/9,c.height/12);
+    ctx.lineTo(3*c.width/4,c.height/12);
+    ctx.stroke();
+    //poll
+    ctx.beginPath();
+    ctx.moveTo(5*c.width/18,c.height/12);
+    ctx.lineTo(5*c.width/18,11*c.height/12);
+    ctx.stroke();
+    //noose
+    ctx.beginPath();
+    ctx.moveTo(c.width/2,c.height/12);
+    ctx.lineTo(c.width/2,5*c.height/24);
+    ctx.stroke();
+    //base
+    ctx.beginPath();
+    ctx.moveTo(c.width/18,11*c.height/12);
+    ctx.lineTo(17*c.width/18,11*c.height/12);
+    ctx.stroke();
+    //support
+    ctx.beginPath();
+    ctx.moveTo(5*c.width/18,19*c.height/24);
+    ctx.lineTo(13*c.width/36,11*c.height/12);
+    ctx.stroke();
+}
+var drawHead = function() {
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = '5';
+    ctx.beginPath();
+    ctx.arc(c.width/2,7*c.height/24,c.height/12,0,2*Math.PI);
+    ctx.stroke();
+}
+var drawBody = function() {
+    ctx.beginPath();
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = '5';
+    ctx.moveTo(c.width/2,3*c.height/8);
+    ctx.lineTo(c.width/2,7*c.height/12);
+    ctx.stroke();
+}
+var drawLeftArm = function() {
+    ctx.beginPath();
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = '5';
+    ctx.moveTo(c.width/2,11*c.height/24);
+    ctx.lineTo(15*c.width/36,3*c.height/8);
+    ctx.stroke();
+}    
+var drawRightArm = function() {
+    ctx.beginPath();
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = '5';
+    ctx.moveTo(c.width/2,11*c.height/24);
+    ctx.lineTo(7*c.width/12,3*c.height/8);
+    ctx.stroke();
+}    
+var drawLeftLeg = function() {
+    ctx.beginPath();
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = '5';
+    ctx.moveTo(c.width/2,7*c.height/12);
+    ctx.lineTo(4*c.width/9,3*c.height/4);
+    ctx.stroke();
+}    
+var drawRightLeg = function() {
+    ctx.beginPath();
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = '5';
+    ctx.moveTo(c.width/2,7*c.height/12);
+    ctx.lineTo(10*c.width/18,3*c.height/4);
+    ctx.stroke();
+}
+var drawFace = function () {
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = '5';
+    ctx.beginPath();
+    ctx.arc(69*c.width/144,c.height/4,c.height/144,0,2*Math.PI);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(75*c.width/144,c.height/4,c.height/144,0,2*Math.PI);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(c.width/2,c.height/3,c.height/48,Math.PI,0);
+    ctx.stroke();
+}
 var changeText = function () {
     html = "<p>press any letter to continue</p>" + "<p>Hint: " + userHint + "</p>" + "<p>Word: " + blankImage +"</p>" + "<p>Guesses Left: " + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>";
     document.querySelector("#game").innerHTML = html;
@@ -64,16 +157,42 @@ var getWord = function () {
     console.log(blankImage);
     changeText();
 }
+var execution = function () { 
+    switch (lives) {
+        case 6:
+        drawGallows()
+        break;
+        case 5:
+        drawHead();
+        drawFace();
+        break;
+        case 4:
+        drawBody();
+        break;
+        case 3:
+        drawLeftArm();
+        break;
+        case 2:
+        drawRightArm();
+        break;
+        case 1:
+        drawLeftLeg();
+        break;
+        case 0:
+        drawRightLeg();
+
+        break;
+    }
+}
 var checkMatch = function () {
     if (letters.includes(userGuess.toLowerCase()) === false) {
         console.log("not a valid guess");
     } else if (randomWord.indexOf(userGuess.toLowerCase()) !== -1) {       
         for (i = 0; randomWord.indexOf(userGuess.toLowerCase(), i) !== -1; i++) {
-        blankWord.splice(randomWord.indexOf(userGuess.toLowerCase(), i), 1, userGuess.toLowerCase());
-        blankImage = blankWord.join(" ");
-        testWord = blankWord.join ("");
-        console.log(blankImage)
-        
+            blankWord.splice(randomWord.indexOf(userGuess.toLowerCase(), i), 1, userGuess.toLowerCase());
+            blankImage = blankWord.join(" ");
+            testWord = blankWord.join ("");
+            console.log(blankImage)        
         }
     } else if (randomWord.indexOf(userGuess.toLowerCase()) === -1 && usedLetters.indexOf(userGuess.toLowerCase()) === -1) {
             usedLetters.push(userGuess.toLowerCase());
@@ -99,21 +218,22 @@ var clearWord = function () {
 
 var restart = function () {
     clearWord();
+    ctx.clearRect(0, 0, c.width, c.height);
+    drawGallows();
     getWord();
 }
 var youWin = function () {
         wins++; 
         html = "<p>press any letter to continue</p>" + "<p>Hint: " + userHint + "</p>" + "<p>Word: " + blankImage +"</p>" + "<p>Guesses Left: " + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<h1>You Win!</p>";
         document.querySelector("#game").innerHTML = html;
-        window.setTimeout(restart, 3000);
+        window.setTimeout(restart, 2000);
 }
 var onLose = function () {
     losses++;
     html = "<p>press any letter to continue</p>" + "<p>Hint: " + userHint + "</p>" + "<p>Word: " + blankImage +"</p>" + "<p>Guesses Left: " + lives + "</p>" + "<p>Used letters: " + usedImage + "</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<h1>You Lose!</p>";
     document.querySelector("#game").innerHTML = html;
-    window.setTimeout(restart, 3000);
+    window.setTimeout(restart, 2000);
 }
-
 var checkWin = function () {
     testWord = blankWord.join ("");
     if (randomWord === testWord) {
@@ -126,11 +246,9 @@ var checkWin = function () {
         console.log("Choose the next letter");
     }
 }
-// var drawHead = function () {
-//     var context = document.getElementById('canvas').getContext('2d');
-// }
 document.addEventListener('DOMContentLoaded', function() {
     getWord();
+    execution();
 }, false);
 document.onkeyup = function gameon(event) {
     userGuess = event.key;
@@ -138,4 +256,5 @@ document.onkeyup = function gameon(event) {
     document.querySelector("#game").innerHTML = html;
 	checkMatch();
     checkWin();
+    execution();
 }
