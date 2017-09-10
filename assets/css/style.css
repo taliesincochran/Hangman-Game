@@ -12,3 +12,6 @@ body {
 .gametext {
 	font-size: 1.5em;
 }
+@media screen and (max-width: 400px) {
+	font-size: .5em;
+}
