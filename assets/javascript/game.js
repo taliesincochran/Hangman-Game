@@ -135,31 +135,31 @@ var game = {
         switch (this.lives) {
             case 6:
             var hmImage = document.getElementById('hangedMan');
-            hmImage.src = "assets/images/hangman6.jpg";
+            hmImage.src = "assets/images/hangman6.png";
             break;
             case 5:
              var hmImage = document.getElementById('hangedMan');
-            hmImage.src = "assets/images/hangman5.jpg";
+            hmImage.src = "assets/images/hangman5.png";
             break;
             case 4:
              var hmImage = document.getElementById('hangedMan');
-            hmImage.src = "assets/images/hangman4.jpg";
+            hmImage.src = "assets/images/hangman4.png";
             break;
             case 3:
              var hmImage = document.getElementById('hangedMan');
-            hmImage.src = "assets/images/hangman3.jpg";
+            hmImage.src = "assets/images/hangman3.png";
             break;
             case 2:
              var hmImage = document.getElementById('hangedMan');
-            hmImage.src = "assets/images/hangman2.jpg";
+            hmImage.src = "assets/images/hangman2.png";
             break;
             case 1:
              var hmImage = document.getElementById('hangedMan');
-            hmImage.src = "assets/images/hangman1.jpg";
+            hmImage.src = "assets/images/hangman1.png";
             break;
             case 0:
             var hmImage = document.getElementById('hangedMan');
-            hmImage.src = "assets/images/hangman0.jpg";
+            hmImage.src = "assets/images/hangman0.png";
             break;
         }
     },
@@ -230,7 +230,7 @@ var game = {
     restart : function () {
         game.clearWord();
         var hmImage = document.getElementById('hangedMan');
-        hmImage.src = "assets/images/hangman6.jpg";
+        hmImage.src = "assets/images/hangman6.png";
         game.getWord();
     },
 
