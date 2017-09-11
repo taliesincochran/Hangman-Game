@@ -1,12 +1,11 @@
+// initializing canvas
 var canv = document.getElementById('hmCanvas');
-canv.width  = 3*window.innerWidth;
-canv.height = 2*window.innerHeight;
+canv.width  = window.innerWidth;
+canv.height =  window.innerHeight;
 var ctx = canv.getContext("2d");
-// Define variables at initial value
-
-// Arrays of Random Words
 var game = {
-    "usCities": ["Aberdeen", "Abilene", "Akron", "Albany", "Albuquerque", "Alexandria", "Amarillo", "Anaheim", 
+// Arrays of Random Words
+    "usCities" : ["Aberdeen", "Akron", "Albany", "Albuquerque", "Alexandria", "Amarillo", "Anaheim", 
         "Anchorage", "Ann Arbor", "Arlington", "Arvada", "Asheville", "Athens", "Atlanta", "Atlantic City", "Augusta", 
         "Aurora", "Austin", "Bakersfield", "Baltimore", "Baton Rouge", "Beaumont", "Bel Air", "Bellevue", "Berkeley", 
         "Birmingham", "Bloomington", "Boise", "Boston", "Boulder", "Bridgeport", "Brownsville", "Buffalo", "Burbank", 
@@ -68,10 +67,17 @@ var game = {
         "Belgrade", "Freetown", "Singapore", "Bratislava", "Mogadishu", "Pretoria", "Seoul", "Madrid", "Khartoum", "Stockholm", 
         "Bern", "Damascus", "Taipei", "Bangkok", "Tunis", "Ankara", "Kampala", "Kiev", "Abu Dhabi", "London", "Washington", "Montevideo", 
         "Vatican City", "Caracas", "Hanoi"],
+    "worldCities" : ["Tokyo","Sao Paulo","Seoul","Kyoto","Osaka","Manila","Mumbai","Delhi","Jakarta","Lagos","Calcutta","Cairo","Buenos Aires",
+        "Rio de Janeiro","Moscow","Shanghai","Karachi","Paris","Istanbul","Nagoya","Beijing","London","Shenzhen","Dusseldorf","Tehran","Bogota",
+        "Lima","Bangkok","Johannesburg","Chennai","Taipei","Baghdad","Santiago","Bangalore","Hyderabad","Saint Petersburg","Lahore","Kinshasa",
+        "Ho Chi Minh City","Madrid","Kuala Lumpur","Toronto","Milan","Shenyang","Khartoum","Riyadh","Singapore","Barcelona",
+        "Sydney","Guadalajara","Montreal","Monterey","Melbourne","Ankara","Recife","Durban","Jeddah","Cape Town","Rome","Naples","Tel Aviv",
+        "Birmingham","Frankfurt","Lisbon","Manchester","Baku","Sapporo","Taichung","Warsaw","Cologne","Hamburg","Dubai","Pretoria","Vancouver",
+        "Beirut","Budapest","Campinas","Harare","Brasilia","Munich","Brussels","Vienna","Damman","Copenhagen","Brisbane","Accra"],
     //Array of word arrays
-    "catagories" : ["this.usCities", "this.countries", "this.usStatesList", "this.seasAndOceans", "this.worldCapitals"],
+    "catagories" : ["usCities", "countries", "usStates", "seasAndOceans", "worldCapitals","worldCities"],
     //Array of hints, matched to categories array
-    "hints" : ["US City", "Nation", "US State", "Large Body of Water", "World Capitals"],
+    "hints" : ["US City", "Nation", "US State", "Large Body of Water", "World Capitals","World Cities"],
     // Array of potential letters   
     "letters" : ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
     // Array of used letters
@@ -92,7 +98,7 @@ var game = {
 //drawing the gallows
     "drawGallows" : function () {
         ctx.strokeStyle = 'black';
-        ctx.lineWidth = '25';
+        ctx.lineWidth = '15';
         //top
         ctx.beginPath();
         ctx.moveTo(2*canv.width/9,canv.height/12);
@@ -122,7 +128,7 @@ var game = {
     //functions to draw the body
     "drawHead" : function() {
         ctx.strokeStyle = 'black';
-        ctx.lineWidth = '15';
+        ctx.lineWidth = '10';
         ctx.beginPath();
         ctx.arc(canv.width/2,7*canv.height/24,canv.height/12,0,2*Math.PI);
         ctx.stroke();
@@ -130,7 +136,7 @@ var game = {
     "drawBody" : function() {
         ctx.beginPath();
         ctx.strokeStyle = 'black';
-        ctx.lineWidth = '15';
+        ctx.lineWidth = '10';
         ctx.moveTo(canv.width/2,3*canv.height/8);
         ctx.lineTo(canv.width/2,7*canv.height/12);
         ctx.stroke();
@@ -146,7 +152,7 @@ var game = {
     "drawRightArm" : function() {
         ctx.beginPath();
         ctx.strokeStyle = 'black';
-        ctx.lineWidth = '15';
+        ctx.lineWidth = '10';
         ctx.moveTo(canv.width/2,11*canv.height/24);
         ctx.lineTo(7*canv.width/12,3*canv.height/8);
         ctx.stroke();
@@ -154,7 +160,7 @@ var game = {
     "drawLeftLeg" : function() {
         ctx.beginPath();
         ctx.strokeStyle = 'black';
-        ctx.lineWidth = '15';
+        ctx.lineWidth = '10';
         ctx.moveTo(canv.width/2,7*canv.height/12);
         ctx.lineTo(4*canv.width/9,3*canv.height/4);
         ctx.stroke();
@@ -162,7 +168,7 @@ var game = {
     "drawRightLeg" : function() {
         ctx.beginPath();
         ctx.strokeStyle = 'black';
-        ctx.lineWidth = '15';
+        ctx.lineWidth = '10';
         ctx.moveTo(canv.width/2,7*canv.height/12);
         ctx.lineTo(10*canv.width/18,3*canv.height/4);
         ctx.stroke();
@@ -186,7 +192,7 @@ var game = {
             "<p>Hint: " + this.userHint + "</p>" + 
             "<p>Word: " + this.blankImage +"</p>" + 
             "<p>Guesses Left: " + this.lives + "</p>" + 
-            "<p>Used this.letters: " + this.usedImage + "</p>" + 
+            "<p>Used letters: " + this.usedImage + "</p>" + 
             "<p>Wins: " + this.wins + "</p>" + 
             "<p>Losses: " + this.losses + "</p>";
         document.querySelector("#game").innerHTML = html;
@@ -206,9 +212,11 @@ var game = {
             this.tempWord= this.usStates[random];
         } else if (catagoryChoosen === this.catagories[3]) {
             this.tempWord= this.seasAndOceans[random];
-        } else {
+        } else if (catagoryChoosen === this.catagories[4]) {
             this.tempWord= this.worldCapitals[random];
-        }    
+        } else {
+            this.tempWord= this.worldCities[random];
+        }       
         this.randomWord = this.tempWord.toLowerCase();
         for (i = 0; i < this.randomWord.length; i++) { 
             if (this.randomWord[i] !== " ") { 
@@ -284,16 +292,20 @@ var game = {
     //Displays on win 
     "youWin" : function () {
         this.wins++; 
+        var html = "";
+        document.querySelector("#game").innerHTML = html;
         var html = "<h1>You Win!</p>";
         document.querySelector("#game").innerHTML = html;
-        window.setTimeout(restart, 2000);
+        window.setTimeout(this.restart, 2000);
     },
     //Displays on loss
     "onLose" : function () {
         this.losses++;
-        var html = "<h1>You Lose!</h1><p>The word was " + game.tempWord +"</p>" 
+        var html = "";
         document.querySelector("#game").innerHTML = html;
-        window.setTimeout(restart, 2000)
+        html = "<h1>You Lose!</h1><p>The word was " + game.tempWord +"</p>" 
+        document.querySelector("#game").innerHTML = html;
+        window.setTimeout(this.restart, 2000)
     },
     //Function to check if player won or lost
     "checkWin" : function () {
@@ -307,26 +319,31 @@ var game = {
             console.log("Choose the next letter");
         }
     },
-}
-    //Restarts game
-var restart = function () {
-    game.clearWord();
-    ctx.clearRect(0, 0, canv.width, canv.height);
-    game.drawGallows();
-    game.getWord();
-}
+    restart : function () {
+        game.clearWord();
+        ctx.clearRect(0, 0, canv.width, canv.height);
+        game.drawGallows();
+        game.getWord();
+    },
 
-//What needs to happen to play
-document.addEventListener('DOMContentLoaded', function() {
-    game.getWord();
-    game.execution();
-}, false);
+    onload : function () { 
+        document.addEventListener('DOMContentLoaded', function() {
+        game.getWord();
+        game.execution();
+        }, false)
+    },
 
-document.onkeyup = function gameon(event) {
-    game.userGuess = event.key;
-    var html = "<p>press any letter to continue</p>" + "<p>Hint: " + game.userHint + "</p>" + "<p>Word: " + game.blankImage +"</p>" + "<p>Guesses Left: " + game.lives + "</p>" + "<p>Used letters: " + game.usedImage + "</p>" + "<p>Wins: " + game.wins + "</p>" + "<p>Losses: " + game.losses + "</p>"; 
-    document.querySelector("#game").innerHTML = html;
-    game.checkMatch();
-    game.checkWin();
-    game.execution();
+    onkey : function () {
+        document.addEventListener('keyup', function (event) {
+        game.userGuess = event.key;
+        var html = "<p>press any letter to continue</p>" + "<p>Hint: " + game.userHint + "</p>" + "<p>Word: " + game.blankImage +"</p>" + "<p>Guesses Left: " + game.lives + "</p>" + "<p>Used letters: " + game.usedImage + "</p>" + "<p>Wins: " + game.wins + "</p>" + "<p>Losses: " + game.losses + "</p>"; 
+        document.querySelector("#game").innerHTML = html;
+        game.checkMatch();
+        game.checkWin();
+        game.execution();
+        }, false)
+    },
 }
+game.onload();
+game.onkey();
+
