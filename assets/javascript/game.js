@@ -52,23 +52,21 @@ var game = {
     "seasAndOceans" : ["Atlantic Ocean", "Pacific Ocean", "Indian Ocean", "Arctic Ocean", "Southern Ocean", "Mediterranean Sea", 
         "Caspian Sea", "Gulf of Mexico", "Red Sea", "Persian Gulf", "North Sea", "Sea of Japan", "Caribbean Sea", "Baltic Sea", 
         "Adriatic Sea", "Aegean Sea", "Black Sea", "South China Sea", "Arabian Sea", "Aral Sea", "Dead Sea", "Hudson Bay"],
-    "worldCapitals" : ["Kabul", "Buenos Aires", "Canberra", "Vienna", "Dhaka", "Minsk", "Brussels", "Sarajevo", "Brasilia", "Sofia", 
-        "Ottawa", "Santiago", "Beijing", "Bogota", "San Jose", "Zagreb", "Havana", "Prague", "Kinshasa", "Copenhagen", "Santo Domingo", 
-        "Cairo", "San Salvador", "Asmara", "Addis Ababa", "Helsinki", "Paris", "Tbilisi", "Berlin", "Athens", "Georgetown", "Budapest", 
-        "Reykjavik", "New Delhi", "Jakarta", "Tehran", "Baghdad", "Jerusalem", "Rome", "Kingston", "Tokyo", "Amman", "Nairobi", "Bishkek", 
-        "Riga", "Beirut", "Monrovia", "Tripoli", "Vilnius", "Luxembourg City", "Kuala Lumpur", "Mexico City", "Ulaanbaatar", "Rabat", 
-        "Windhoek", "Kathmandu", "Amsterdam", "Wellington", "Pyongyang", "Oslo", "Muscat", "Islamabad", "Panama City", "Port Moresby", 
-        "Lima", "Manila", "Warsaw", "Lisbon", "San Juan", "Dublin", "Skopje", "Brazzaville", "Bucharest", "Moscow", "San Marino", "Riyadh", 
-        "Belgrade", "Freetown", "Singapore", "Bratislava", "Mogadishu", "Pretoria", "Seoul", "Madrid", "Khartoum", "Stockholm", 
-        "Bern", "Damascus", "Taipei", "Bangkok", "Tunis", "Ankara", "Kampala", "Kiev", "Abu Dhabi", "London", "Washington", "Montevideo", 
-        "Vatican City", "Caracas", "Hanoi"],
-    "worldCities" : ["Tokyo","Sao Paulo","Seoul","Kyoto","Osaka","Manila","Mumbai","Delhi","Jakarta","Lagos","Calcutta","Cairo","Buenos Aires",
-        "Rio de Janeiro","Moscow","Shanghai","Karachi","Paris","Istanbul","Nagoya","Beijing","London","Shenzhen","Dusseldorf","Tehran","Bogota",
-        "Lima","Bangkok","Johannesburg","Chennai","Taipei","Baghdad","Santiago","Bangalore","Hyderabad","Saint Petersburg","Lahore","Kinshasa",
-        "Ho Chi Minh City","Madrid","Kuala Lumpur","Toronto","Milan","Shenyang","Khartoum","Riyadh","Singapore","Barcelona",
-        "Sydney","Guadalajara","Montreal","Monterey","Melbourne","Ankara","Recife","Durban","Jeddah","Cape Town","Rome","Naples","Tel Aviv",
-        "Birmingham","Frankfurt","Lisbon","Manchester","Baku","Sapporo","Taichung","Warsaw","Cologne","Hamburg","Dubai","Pretoria","Vancouver",
-        "Beirut","Budapest","Campinas","Harare","Brasilia","Munich","Brussels","Vienna","Damman","Copenhagen","Brisbane","Accra"],
+    "worldCapitals" : ["Abu Dhabi", "Addis Ababa", "Amman", "Amsterdam", "Ankara", "Asmara", "Athens", "Baghdad", "Bangkok", "Beijing", 
+        "Beirut", "Belgrade", "Berlin", "Bern", "Bishkek", "Bogota", "Brasilia", "Bratislava", "Brazzaville", "Brussels", "Bucharest", 
+        "Budapest", "Buenos Aires", "Cairo", "Canberra", "Caracas", "Copenhagen", "Damascus", "Dhaka", "Dublin", "Freetown", "Georgetown", 
+        "Hanoi", "Havana", "Helsinki", "Islamabad", "Jakarta", "Jerusalem", "Kabul", "Kampala", "Kathmandu", "Khartoum", "Kiev", "Kingston", 
+        "Kinshasa", "Kuala Lumpur", "Lima", "Lisbon", "London", "Luxembourg City", "Madrid", "Manila", "Mexico City", "Minsk", "Mogadishu", 
+        "Monrovia", "Montevideo", "Moscow", "Muscat", "Nairobi", "New Delhi", "Oslo", "Ottawa", "Panama City", "Paris", "Port Moresby", 
+        "Prague", "Pretoria", "Pyongyang", "Rabat", "Reykjavik", "Riga", "Riyadh", "Rome", "San Jose", "San Juan", "San Marino", "San Salvador", 
+        "Santiago", "Santo Domingo", "Sarajevo", "Seoul", "Singapore", "Skopje", "Sofia", "Stockholm", "Taipei", "Tbilisi", "Tehran", "Tokyo", 
+        "Tripoli", "Tunis", "Ulaanbaatar", "Vatican City", "Vienna", "Vilnius", "Warsaw", "Washington", "Wellington", "Windhoek", "Zagreb"],
+    "worldCities" : ["Accra","Baku", "Bangalore", "Bangkok", "Barcelona", "Beijing", "Beirut", "Birmingham", "Bogota", "Brasilia", "Brisbane", 
+        "Calcutta", "Campinas", "Cape Town", "Chennai", "Cologne", "Copenhagen", "Damman", "Delhi", "Dubai", "Durban", "Dusseldorf", "Frankfurt", 
+        "Guadalajara", "Hamburg", "Harare", "Ho Chi Minh City", "Hyderabad", "Istanbul", "Jeddah", "Johannesburg", "Karachi", "Khartoum", 
+        "Kuala Lumpur", "Kyoto", "Lagos", "Lahore", "Manchester", "Melbourne", "Milan", "Monterey", "Montreal", "Mumbai", "Munich", "Nagoya", 
+        "Naples", "Osaka", "Recife", "Rio de Janeiro", "Riyadh", "Saint Petersburg", "Sao Paulo", "Sapporo", "Shanghai", "Shenyang", "Shenzhen", 
+        "Sydney", "Taichung", "Taipei", "Tel Aviv", "Toronto", "Vancouver", "Warsaw"],
     //Array of word arrays
     "catagories" : ["usCities", "countries", "usStates", "seasAndOceans", "worldCapitals","worldCities"],
     //Array of hints, matched to categories array
@@ -98,26 +96,32 @@ var game = {
             "<p>Wins: " + this.wins + "</p>" + 
             "<p>Losses: " + this.losses + "</p>";
         document.querySelector("#game").innerHTML = html;
+        // console.log("press any letter to continue" + 
+        //     "Hint: " + this.userHint + 
+        //     "Word: " + this.blankImage + 
+        //     "Guesses Left: " + this.lives + 
+        //     "Used letters: " + this.usedImage + 
+        //     "Wins: " + this.wins +
+        //     "Losses: " + this.losses);
     },
     //Function to get a random word and turn it into blanks
     "getWord" : function () {
         var catagoryChoosen = this.catagories[Math.floor(Math.random() * this.catagories.length)];
         this.userHint = this.hints[this.catagories.indexOf(catagoryChoosen)]; 
         
-        var random =  Math.floor(Math.random() * catagoryChoosen.length);
+        var random =  Math.floor(Math.random());
         if (catagoryChoosen === this.catagories[0]) {
-            // document.getElementById("hmcanvas").style.backgroundImage = url('../images/this.usCities.png');
-            this.tempWord= this.usCities[random];
+            this.tempWord= this.usCities[random * this.usCities.length];
         } else if (catagoryChoosen === this.catagories[1]) {
-            this.tempWord= this.countries[random];
+            this.tempWord= this.countries[random * this.countries.length];
         } else if (catagoryChoosen === this.catagories[2]) {
-            this.tempWord= this.usStates[random];
+            this.tempWord= this.usStates[random * this.usStates.length];
         } else if (catagoryChoosen === this.catagories[3]) {
-            this.tempWord= this.seasAndOceans[random];
+            this.tempWord= this.seasAndOceans[random * this.seasAndOceans.length];
         } else if (catagoryChoosen === this.catagories[4]) {
-            this.tempWord= this.worldCapitals[random];
+            this.tempWord= this.worldCapitals[random * this.worldCapitals.length];
         } else {
-            this.tempWord= this.worldCities[random];
+            this.tempWord= this.worldCities[random * this.worldCities.length];
         }       
         this.randomWord = this.tempWord.toLowerCase();
         for (i = 0; i < this.randomWord.length; i++) { 
