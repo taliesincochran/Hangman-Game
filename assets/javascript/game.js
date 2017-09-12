@@ -24,6 +24,7 @@ var game = {
         "Tallahassee", "Tampa", "Thornton", "Toledo", "Topeka", "Trenton", "Tucson", "Tulsa", "Tuscaloosa", "Utica", 
         "Virginia Beach", "Waco", "Washington", "Waterloo", "Westminster", "Wichita", "Wilmington", "Winston", "Worcester", 
         "Yonkers", "York", "Youngstown"],
+
     "countries" : ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua and Barbuda", "Argentina", 
         "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", 
         "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", 
@@ -43,15 +44,18 @@ var game = {
         "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "East Timor", "Togo", "Tonga", "Trinidad and Tobago", 
         "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", 
         "Uzbekistan", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"],
+
     "usStates" : ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia",  
         "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", 
         "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", 
         "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Puerto Rico", "Rhode Island", 
         "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virgin Island", "Virginia", "Washington", "West Virginia", 
         "Wisconsin", "Wyoming"],
+ 
     "seasAndOceans" : ["Atlantic Ocean", "Pacific Ocean", "Indian Ocean", "Arctic Ocean", "Southern Ocean", "Mediterranean Sea", 
         "Caspian Sea", "Gulf of Mexico", "Red Sea", "Persian Gulf", "North Sea", "Sea of Japan", "Caribbean Sea", "Baltic Sea", 
         "Adriatic Sea", "Aegean Sea", "Black Sea", "South China Sea", "Arabian Sea", "Aral Sea", "Dead Sea", "Hudson Bay"],
+ 
     "worldCapitals" : ["Abu Dhabi", "Addis Ababa", "Amman", "Amsterdam", "Ankara", "Asmara", "Athens", "Baghdad", "Bangkok", "Beijing", 
         "Beirut", "Belgrade", "Berlin", "Bern", "Bishkek", "Bogota", "Brasilia", "Bratislava", "Brazzaville", "Brussels", "Bucharest", 
         "Budapest", "Buenos Aires", "Cairo", "Canberra", "Caracas", "Copenhagen", "Damascus", "Dhaka", "Dublin", "Freetown", "Georgetown", 
@@ -61,26 +65,29 @@ var game = {
         "Prague", "Pretoria", "Pyongyang", "Rabat", "Reykjavik", "Riga", "Riyadh", "Rome", "San Jose", "San Juan", "San Marino", "San Salvador", 
         "Santiago", "Santo Domingo", "Sarajevo", "Seoul", "Singapore", "Skopje", "Sofia", "Stockholm", "Taipei", "Tbilisi", "Tehran", "Tokyo", 
         "Tripoli", "Tunis", "Ulaanbaatar", "Vatican City", "Vienna", "Vilnius", "Warsaw", "Washington", "Wellington", "Windhoek", "Zagreb"],
+
     "worldCities" : ["Accra","Baku", "Bangalore", "Bangkok", "Barcelona", "Beijing", "Beirut", "Birmingham", "Bogota", "Brasilia", "Brisbane", 
         "Calcutta", "Campinas", "Cape Town", "Chennai", "Cologne", "Copenhagen", "Damman", "Delhi", "Dubai", "Durban", "Dusseldorf", "Frankfurt", 
         "Guadalajara", "Hamburg", "Harare", "Ho Chi Minh City", "Hyderabad", "Istanbul", "Jeddah", "Johannesburg", "Karachi", "Khartoum", 
         "Kuala Lumpur", "Kyoto", "Lagos", "Lahore", "Manchester", "Melbourne", "Milan", "Monterey", "Montreal", "Mumbai", "Munich", "Nagoya", 
         "Naples", "Osaka", "Recife", "Rio de Janeiro", "Riyadh", "Saint Petersburg", "Sao Paulo", "Sapporo", "Shanghai", "Shenyang", "Shenzhen", 
         "Sydney", "Taichung", "Taipei", "Tel Aviv", "Toronto", "Vancouver", "Warsaw"],
+
     "USstateCapitals" : ["Montgomery", "Juneau", "Phoenix", "Little Rock", "Sacramento", "Denver", "Hartford", "Dover", "Tallahassee", "Atlanta", 
         "Honolulu", "Boise", "Springfield", "Indianapolis", "Des Moines", "Topeka", "Frankfort", "Baton Rouge", "Augusta", "Annapolis", "Boston", 
         "Lansing", "Saint Paul", "Jackson", "Jefferson City", "Helena", "Lincoln", "Carson City", "Concord", "MontgomeryA2:A42", "Juneau", "Phoenix", 
         "Little Rock", "Sacramento", "Denver", "Hartford", "Dover", "Tallahassee", "Atlanta", "Honolulu", "Boise", "Springfield", "Indianapolis", 
         "Des Moines", "Topeka", "Frankfort", "Baton Rouge", "Augusta", "Annapolis", "Boston"],
 
-    //Array of word arrays
-    "catagories" : ["usCities", "countries", "usStates", "seasAndOceans", "worldCapitals","worldCities","USstateCapitals"],
     //Array of hints, matched to categories array
     "hints" : ["US city", "nation", "US state", "Large body of water", "world capital","world city","US state capital"],
+
     // Array of potential letters   
     "letters" : ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+
     // Array of used letters
     "usedLetters" : [],
+
     // Other Variables
     "randomWord" : "",
     "userHint" : "",
@@ -93,16 +100,26 @@ var game = {
     "lives" : 6, 
     "userGuess" : "",
     "tempWord": "",
+    "hmImage": document.getElementById('hangedMan'),
+
+    // flag to stop input if false
+    "flag" : true,
+
+    //Sounds 
     "rightSound" : document.getElementById("right"),
     "wrongSound" : document.getElementById("wrong"),
     "incorrectSound" : document.getElementById("incorrect"),
     "correctSound" : document.getElementById("correct"),
+
+    //Function to preload sounds to hopefully help with delay
     "loadSounds" : function () {
         this.rightSound.load();
         this.wrongSound.load();
         this.correctSound.load();
         this.incorrectSound.load();
     },
+
+    //Function to update text after change in all cases but a win or loss
     "changeText" : function () {
         var html = "<p>Press any letter to continue</p>" + 
             "<p>Hint: " + this.userHint + "</p>" + 
@@ -113,32 +130,37 @@ var game = {
             "<p>Losses: " + this.losses + "</p>";
         document.querySelector("#game").innerHTML = html;
     },
+
     //Function to get a random word and turn it into blanks
     "getWord" : function () {
-        var catagoryChoosen = this.catagories[Math.floor(Math.random() * this.catagories.length)];
-        this.userHint = this.hints[this.catagories.indexOf(catagoryChoosen)]; 
-        if (catagoryChoosen === this.catagories[0]) {
+        //Choosing the catagory randomly from the associated hint array and setting the hint
+        var catagoryChoosen = this.hints[Math.floor(Math.random() * this.hints.length)];
+        this.userHint = this.hints[this.hints.indexOf(catagoryChoosen)]; 
+        
+        //Picking the random word from the choosen catagory and change the background
+        if (catagoryChoosen === this.hints[0]) {
             this.tempWord= this.usCities[Math.floor(Math.random() * this.usCities.length)];
             document.getElementById("bg").style.backgroundImage = "url('assets/images/usCities.png')";
-        } else if (catagoryChoosen === this.catagories[1]) {
+        } else if (catagoryChoosen === this.hints[1]) {
             this.tempWord= this.countries[Math.floor(Math.random() * this.countries.length)];
             document.getElementById("bg").style.backgroundImage = "url('assets/images/countries.png')";
-        } else if (catagoryChoosen === this.catagories[2]) {
+        } else if (catagoryChoosen === this.hints[2]) {
             this.tempWord= this.usStates[Math.floor(Math.random() * this.usStates.length)];
             document.getElementById("bg").style.backgroundImage = "url('assets/images/usStates.png')";
-        } else if (catagoryChoosen === this.catagories[3]) {
+        } else if (catagoryChoosen === this.hints[3]) {
             this.tempWord= this.seasAndOceans[Math.floor(Math.random() * this.seasAndOceans.length)];
             document.getElementById("bg").style.backgroundImage = "url('assets/images/seasAndOceans.png')";
-        } else if (catagoryChoosen === this.catagories[4]) {
+        } else if (catagoryChoosen === this.hints[4]) {
             this.tempWord= this.worldCapitals[Math.floor(Math.random() * this.worldCapitals.length)];
             document.getElementById("bg").style.backgroundImage = "url('assets/images/capitalCities.png')";
-        } else if (catagoryChoosen === this.catagories[5]) {
+        } else if (catagoryChoosen === this.hints[5]) {
             this.tempWord= this.worldCities[Math.floor(Math.random() * this.worldCities.length)];
             document.getElementById("bg").style.backgroundImage = "url('assets/images/capitalCities.png')";
         } else {
             this.tempWord= this.USstateCapitals[Math.floor(Math.random() * this.USstateCapitals.length)];
             document.getElementById("bg").style.backgroundImage = "url('assets/images/usStates.png')";
-        }       
+        }    
+        //Transforming random word into an array of _ and &nbsp's and joinging that into a string that is shown to the player   
         this.randomWord = this.tempWord.toLowerCase();
         for (i = 0; i < this.randomWord.length; i++) { 
             if (this.randomWord[i] !== " ") { 
@@ -150,40 +172,35 @@ var game = {
         this.blankImage = this.blankWord.join ("&nbsp;");
         this.changeText();
     },
+
     //Function to draw body as guesses fail
     "execution" : function () { 
         switch (this.lives) {
             case 6:
-                var hmImage = document.getElementById('hangedMan');
-                hmImage.src = "assets/images/hangman6.png";
+                this.hmImage.src = "assets/images/hangman6.png";
                 break;
             case 5:
-                var hmImage = document.getElementById('hangedMan');
-                hmImage.src = "assets/images/hangman5.png";
+                this.hmImage.src = "assets/images/hangman5.png";
                 break;
             case 4:
-                var hmImage = document.getElementById('hangedMan');
-                hmImage.src = "assets/images/hangman4.png";
+                this.hmImage.src = "assets/images/hangman4.png";
                 break;
             case 3:
-                var hmImage = document.getElementById('hangedMan');
-                hmImage.src = "assets/images/hangman3.png";
+                this.hmImage.src = "assets/images/hangman3.png";
                 break;
             case 2:
-                var hmImage = document.getElementById('hangedMan');
-                hmImage.src = "assets/images/hangman2.png";
+                this.hmImage.src = "assets/images/hangman2.png";
                 break;
             case 1:
-                var hmImage = document.getElementById('hangedMan');
-                hmImage.src = "assets/images/hangman1.png";
+                this.hmImage.src = "assets/images/hangman1.png";
                 break;
             case 0:
-                var hmImage = document.getElementById('hangedMan');
-                hmImage.src = "assets/images/hangman0.png";
+                this.hmImage.src = "assets/images/hangman0.png";
 
                 break;
         }
     },
+
     //Function to see if guess matches a letter from the random word 
     "checkMatch" : function () {
         var uGuess = this.userGuess.toLowerCase();
@@ -207,6 +224,7 @@ var game = {
             }
             this.changeText();
     },
+
     //Function to reset variables.
     "clearWord" : function () {
             this.randomWord = "";
@@ -220,7 +238,8 @@ var game = {
             this.changeText(); 
             this.tempWord = "";
     },
-    //Displays on win 
+
+    //Displays on win, adds win to counter and sets flag to false to prevent input 
      "youWin" : function () {
         this.wins++; 
         var html = "";
@@ -228,10 +247,12 @@ var game = {
         var html = "<h1>You Win!</h1>" + "<p>The "+ this.userHint + " was " + this.tempWord +"</p>";
         document.querySelector("#game").innerHTML = html;
         this.rightSound.play();
+        this.flag = false;
         window.setTimeout(this.restart, 1000);
 
     },
-    //Displays on loss
+
+    //Displays on loss, adds loss to counter and sets flag to false to prevent input
     "onLose" : function () {
         this.losses++;
         var html = "";
@@ -239,28 +260,33 @@ var game = {
         html = "<h1>You Lose!</h1>" + "<p>The " + this.userHint + " was " + this.tempWord +"</p>" 
         document.querySelector("#game").innerHTML = html;
         this.wrongSound.play();
+        this.flag = false
         window.setTimeout(this.restart, 1000)
     },
+
     //Function to check if player won or lost
     "checkWin" : function () {
+        //replacing &nbsp to a space so that it will match random word exactly when compared
         var testWord = this.blankWord.join("").replace(/&nbsp;/gi,' ');
         if (this.randomWord === testWord) {
             this.youWin();        
         } else if (this.lives === 0) {
             this.onLose();
-            
         } else {
             console.log("Choose the next letter");
         }
     },
-    restart : function () {
+
+    //Function to restart the game
+    "restart" : function () {
         game.clearWord();
-        var hmImage = document.getElementById('hangedMan');
-        hmImage.src = "assets/images/hangman6.png";
+        game.hmImage.src = "assets/images/hangman6.png";
         game.getWord();
+        game.flag = true;
     },
 
-    onload : function () { 
+    //Function to execute on page loading. Needs a call back after object is defined to work
+    "onload" : function () { 
         document.addEventListener('DOMContentLoaded', function() {
         game.loadSounds();
         game.getWord();
@@ -268,16 +294,26 @@ var game = {
         }, false)
     },
 
-    onkey : function () {      
-    document.addEventListener('keyup', function (event) {
-        game.userGuess = event.key;
-        var html = "<p>Press a letter to play.</p>" + "<p>Hint: " + game.userHint + "</p>" + "<p>Word: " + game.blankImage +"</p>" + "<p>Guesses Left: " + game.lives + "</p>" + "<p>Used letters: " + game.usedImage + "</p>" + "<p>Wins: " + game.wins + "</p>" + "<p>Losses: " + game.losses + "</p>"; 
-        document.querySelector("#game").innerHTML = html;
-        game.checkMatch();
-        game.execution();
-        game.checkWin();
+    //Function to execute on key up. Needs a call back after object is defined to work. Is blocked after win and loss until reload
+    "onkey" : function () {      
+        document.addEventListener('keyup', function (event) {
+            if (game.flag === true) {
+                game.userGuess = event.key;
+                var html = "<p>Press a letter to play.</p>" + "<p>Hint: " + game.userHint + "</p>" + "<p>Word: " + game.blankImage +"</p>" + 
+                "<p>Guesses Left: " + game.lives + "</p>" + "<p>Used letters: " + game.usedImage + "</p>" + "<p>Wins: " + game.wins + "</p>" + 
+                "<p>Losses: " + game.losses + "</p>"; 
+                document.querySelector("#game").innerHTML = html;
+                game.checkMatch();
+                game.execution();
+                game.checkWin();
+            }
+            else {
+                console.log('Input is not allowed.')   
+            }
         }, false)
     },
 }
+
+//Callback to start game
 game.onload();
 game.onkey();
