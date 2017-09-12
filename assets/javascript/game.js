@@ -59,7 +59,7 @@ var game = {
     "worldCapitals" : ["Abu Dhabi", "Addis Ababa", "Amman", "Amsterdam", "Ankara", "Asmara", "Athens", "Baghdad", "Bangkok", "Beijing", 
         "Beirut", "Belgrade", "Berlin", "Bern", "Bishkek", "Bogota", "Brasilia", "Bratislava", "Brazzaville", "Brussels", "Bucharest", 
         "Budapest", "Buenos Aires", "Cairo", "Canberra", "Caracas", "Copenhagen", "Damascus", "Dhaka", "Dublin", "Freetown", "Georgetown", 
-        "Hanoi", "Havana", "Helsinki", "Islamabad", "Jakarta", "Jerusalem", "Kabul", "Kampala", "Kathmandu", "Khartoum", "Kiev", "Kingston", 
+        "Hanoi", "Havana", "Helsinki", "Islamabad", "Jakarta", "Kabul", "Kampala", "Kathmandu", "Khartoum", "Kiev", "Kingston", 
         "Kinshasa", "Kuala Lumpur", "Lima", "Lisbon", "London", "Luxembourg City", "Madrid", "Manila", "Mexico City", "Minsk", "Mogadishu", 
         "Monrovia", "Montevideo", "Moscow", "Muscat", "Nairobi", "New Delhi", "Oslo", "Ottawa", "Panama City", "Paris", "Port Moresby", 
         "Prague", "Pretoria", "Pyongyang", "Rabat", "Reykjavik", "Riga", "Riyadh", "Rome", "San Jose", "San Juan", "San Marino", "San Salvador", 
@@ -68,7 +68,7 @@ var game = {
 
     "worldCities" : ["Accra","Baku", "Bangalore", "Bangkok", "Barcelona", "Beijing", "Beirut", "Birmingham", "Bogota", "Brasilia", "Brisbane", 
         "Calcutta", "Campinas", "Cape Town", "Chennai", "Cologne", "Copenhagen", "Damman", "Delhi", "Dubai", "Durban", "Dusseldorf", "Frankfurt", 
-        "Guadalajara", "Hamburg", "Harare", "Ho Chi Minh City", "Hyderabad", "Istanbul", "Jeddah", "Johannesburg", "Karachi", "Khartoum", 
+        "Guadalajara", "Hamburg", "Harare", "Ho Chi Minh City", "Hyderabad", "Istanbul", "Jeddah", "Johannesburg", "Jerusalem", "Karachi", "Khartoum", 
         "Kuala Lumpur", "Kyoto", "Lagos", "Lahore", "Manchester", "Melbourne", "Milan", "Monterey", "Montreal", "Mumbai", "Munich", "Nagoya", 
         "Naples", "Osaka", "Recife", "Rio de Janeiro", "Riyadh", "Saint Petersburg", "Sao Paulo", "Sapporo", "Shanghai", "Shenyang", "Shenzhen", 
         "Sydney", "Taichung", "Taipei", "Tel Aviv", "Toronto", "Vancouver", "Warsaw"],
