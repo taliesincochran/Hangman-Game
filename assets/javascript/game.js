@@ -60,17 +60,23 @@ var game = {
         "Monrovia", "Montevideo", "Moscow", "Muscat", "Nairobi", "New Delhi", "Oslo", "Ottawa", "Panama City", "Paris", "Port Moresby", 
         "Prague", "Pretoria", "Pyongyang", "Rabat", "Reykjavik", "Riga", "Riyadh", "Rome", "San Jose", "San Juan", "San Marino", "San Salvador", 
         "Santiago", "Santo Domingo", "Sarajevo", "Seoul", "Singapore", "Skopje", "Sofia", "Stockholm", "Taipei", "Tbilisi", "Tehran", "Tokyo", 
-        "Tripoli", "Tunis", "Ulaanbaatar", "Vatican City", "Vienna", "Vilnius", "Warsaw", "Washington", "Wellington", "Windhoek", "Zagreb"],
+        "Tripoli", "Tunis", "Ulaanbaatar", "Vatican City", "Vienna", "Vilnius", "Warsaw", "Washington", "Wellington", "Windhoek", "Zagreb"],
     "worldCities" : ["Accra","Baku", "Bangalore", "Bangkok", "Barcelona", "Beijing", "Beirut", "Birmingham", "Bogota", "Brasilia", "Brisbane", 
         "Calcutta", "Campinas", "Cape Town", "Chennai", "Cologne", "Copenhagen", "Damman", "Delhi", "Dubai", "Durban", "Dusseldorf", "Frankfurt", 
         "Guadalajara", "Hamburg", "Harare", "Ho Chi Minh City", "Hyderabad", "Istanbul", "Jeddah", "Johannesburg", "Karachi", "Khartoum", 
         "Kuala Lumpur", "Kyoto", "Lagos", "Lahore", "Manchester", "Melbourne", "Milan", "Monterey", "Montreal", "Mumbai", "Munich", "Nagoya", 
         "Naples", "Osaka", "Recife", "Rio de Janeiro", "Riyadh", "Saint Petersburg", "Sao Paulo", "Sapporo", "Shanghai", "Shenyang", "Shenzhen", 
         "Sydney", "Taichung", "Taipei", "Tel Aviv", "Toronto", "Vancouver", "Warsaw"],
+    "USstateCapitals" : ["Montgomery", "Juneau", "Phoenix", "Little Rock", "Sacramento", "Denver", "Hartford", "Dover", "Tallahassee", "Atlanta", 
+        "Honolulu", "Boise", "Springfield", "Indianapolis", "Des Moines", "Topeka", "Frankfort", "Baton Rouge", "Augusta", "Annapolis", "Boston", 
+        "Lansing", "Saint Paul", "Jackson", "Jefferson City", "Helena", "Lincoln", "Carson City", "Concord", "MontgomeryA2:A42", "Juneau", "Phoenix", 
+        "Little Rock", "Sacramento", "Denver", "Hartford", "Dover", "Tallahassee", "Atlanta", "Honolulu", "Boise", "Springfield", "Indianapolis", 
+        "Des Moines", "Topeka", "Frankfort", "Baton Rouge", "Augusta", "Annapolis", "Boston"],
+
     //Array of word arrays
-    "catagories" : ["usCities", "countries", "usStates", "seasAndOceans", "worldCapitals","worldCities"],
+    "catagories" : ["usCities", "countries", "usStates", "seasAndOceans", "worldCapitals","worldCities","USstateCapitals"],
     //Array of hints, matched to categories array
-    "hints" : ["US city", "nation", "US state", "Large body of water", "world capital","world city"],
+    "hints" : ["US city", "nation", "US state", "Large body of water", "world capital","world city","US state capital"],
     // Array of potential letters   
     "letters" : ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
     // Array of used letters
@@ -87,8 +93,18 @@ var game = {
     "lives" : 6, 
     "userGuess" : "",
     "tempWord": "",
+    "rightSound" : document.getElementById("right"),
+    "wrongSound" : document.getElementById("wrong"),
+    "incorrectSound" : document.getElementById("incorrect"),
+    "correctSound" : document.getElementById("correct"),
+    "loadSounds" : function () {
+        this.rightSound.load();
+        this.wrongSound.load();
+        this.correctSound.load();
+        this.incorrectSound.load();
+    },
     "changeText" : function () {
-        var html = "<p>press any letter to continue</p>" + 
+        var html = "<p>Press any letter to continue</p>" + 
             "<p>Hint: " + this.userHint + "</p>" + 
             "<p>Word: " + this.blankImage +"</p>" + 
             "<p>Guesses Left: " + this.lives + "</p>" + 
@@ -96,32 +112,32 @@ var game = {
             "<p>Wins: " + this.wins + "</p>" + 
             "<p>Losses: " + this.losses + "</p>";
         document.querySelector("#game").innerHTML = html;
-        // console.log("press any letter to continue" + 
-        //     "Hint: " + this.userHint + 
-        //     "Word: " + this.blankImage + 
-        //     "Guesses Left: " + this.lives + 
-        //     "Used letters: " + this.usedImage + 
-        //     "Wins: " + this.wins +
-        //     "Losses: " + this.losses);
     },
     //Function to get a random word and turn it into blanks
     "getWord" : function () {
         var catagoryChoosen = this.catagories[Math.floor(Math.random() * this.catagories.length)];
         this.userHint = this.hints[this.catagories.indexOf(catagoryChoosen)]; 
-        
-        var random =  Math.floor(Math.random());
         if (catagoryChoosen === this.catagories[0]) {
-            this.tempWord= this.usCities[random * this.usCities.length];
+            this.tempWord= this.usCities[Math.floor(Math.random() * this.usCities.length)];
+            document.getElementById("bg").style.backgroundImage = "url('assets/images/usCities.png')";
         } else if (catagoryChoosen === this.catagories[1]) {
-            this.tempWord= this.countries[random * this.countries.length];
+            this.tempWord= this.countries[Math.floor(Math.random() * this.countries.length)];
+            document.getElementById("bg").style.backgroundImage = "url('assets/images/countries.png')";
         } else if (catagoryChoosen === this.catagories[2]) {
-            this.tempWord= this.usStates[random * this.usStates.length];
+            this.tempWord= this.usStates[Math.floor(Math.random() * this.usStates.length)];
+            document.getElementById("bg").style.backgroundImage = "url('assets/images/usStates.png')";
         } else if (catagoryChoosen === this.catagories[3]) {
-            this.tempWord= this.seasAndOceans[random * this.seasAndOceans.length];
+            this.tempWord= this.seasAndOceans[Math.floor(Math.random() * this.seasAndOceans.length)];
+            document.getElementById("bg").style.backgroundImage = "url('assets/images/seasAndOceans.png')";
         } else if (catagoryChoosen === this.catagories[4]) {
-            this.tempWord= this.worldCapitals[random * this.worldCapitals.length];
+            this.tempWord= this.worldCapitals[Math.floor(Math.random() * this.worldCapitals.length)];
+            document.getElementById("bg").style.backgroundImage = "url('assets/images/capitalCities.png')";
+        } else if (catagoryChoosen === this.catagories[5]) {
+            this.tempWord= this.worldCities[Math.floor(Math.random() * this.worldCities.length)];
+            document.getElementById("bg").style.backgroundImage = "url('assets/images/capitalCities.png')";
         } else {
-            this.tempWord= this.worldCities[random * this.worldCities.length];
+            this.tempWord= this.USstateCapitals[Math.floor(Math.random() * this.USstateCapitals.length)];
+            document.getElementById("bg").style.backgroundImage = "url('assets/images/usStates.png')";
         }       
         this.randomWord = this.tempWord.toLowerCase();
         for (i = 0; i < this.randomWord.length; i++) { 
@@ -138,33 +154,34 @@ var game = {
     "execution" : function () { 
         switch (this.lives) {
             case 6:
-            var hmImage = document.getElementById('hangedMan');
-            hmImage.src = "assets/images/hangman6.png";
-            break;
+                var hmImage = document.getElementById('hangedMan');
+                hmImage.src = "assets/images/hangman6.png";
+                break;
             case 5:
-             var hmImage = document.getElementById('hangedMan');
-            hmImage.src = "assets/images/hangman5.png";
-            break;
+                var hmImage = document.getElementById('hangedMan');
+                hmImage.src = "assets/images/hangman5.png";
+                break;
             case 4:
-             var hmImage = document.getElementById('hangedMan');
-            hmImage.src = "assets/images/hangman4.png";
-            break;
+                var hmImage = document.getElementById('hangedMan');
+                hmImage.src = "assets/images/hangman4.png";
+                break;
             case 3:
-             var hmImage = document.getElementById('hangedMan');
-            hmImage.src = "assets/images/hangman3.png";
-            break;
+                var hmImage = document.getElementById('hangedMan');
+                hmImage.src = "assets/images/hangman3.png";
+                break;
             case 2:
-             var hmImage = document.getElementById('hangedMan');
-            hmImage.src = "assets/images/hangman2.png";
-            break;
+                var hmImage = document.getElementById('hangedMan');
+                hmImage.src = "assets/images/hangman2.png";
+                break;
             case 1:
-             var hmImage = document.getElementById('hangedMan');
-            hmImage.src = "assets/images/hangman1.png";
-            break;
+                var hmImage = document.getElementById('hangedMan');
+                hmImage.src = "assets/images/hangman1.png";
+                break;
             case 0:
-            var hmImage = document.getElementById('hangedMan');
-            hmImage.src = "assets/images/hangman0.png";
-            break;
+                var hmImage = document.getElementById('hangedMan');
+                hmImage.src = "assets/images/hangman0.png";
+
+                break;
         }
     },
     //Function to see if guess matches a letter from the random word 
@@ -179,12 +196,14 @@ var game = {
             for (i = 0; this.randomWord.indexOf(uGuess, i) !== -1; i++) {
                 this.blankWord.splice(this.randomWord.indexOf(uGuess, i), 1, uGuess);
                 this.blankImage = this.blankWord.join(" ");
-                testWord = this.blankWord.join ("");      
-            }
+                testWord = this.blankWord.join ("");  
+                this.correctSound.play();
+                }
         } else if (rwIndex === -1 && ulIndex === -1) {
                 this.usedLetters.push(uGuess);
                 this.usedImage = this.usedLetters.join(',');
                 this.lives--;
+                this.incorrectSound.play();
             }
             this.changeText();
     },
@@ -202,22 +221,25 @@ var game = {
             this.tempWord = "";
     },
     //Displays on win 
-    "youWin" : function () {
+     "youWin" : function () {
         this.wins++; 
         var html = "";
         document.querySelector("#game").innerHTML = html;
         var html = "<h1>You Win!</h1>" + "<p>The "+ this.userHint + " was " + this.tempWord +"</p>";
         document.querySelector("#game").innerHTML = html;
-        window.setTimeout(this.restart, 2000);
+        this.rightSound.play();
+        window.setTimeout(this.restart, 1000);
+
     },
     //Displays on loss
     "onLose" : function () {
         this.losses++;
         var html = "";
         document.querySelector("#game").innerHTML = html;
-        html = "<h1>You Lose!</h1>" + "<p>The " + game.userHint + " was " + game.tempWord +"</p>" 
+        html = "<h1>You Lose!</h1>" + "<p>The " + this.userHint + " was " + this.tempWord +"</p>" 
         document.querySelector("#game").innerHTML = html;
-        window.setTimeout(this.restart, 2000)
+        this.wrongSound.play();
+        window.setTimeout(this.restart, 1000)
     },
     //Function to check if player won or lost
     "checkWin" : function () {
@@ -240,22 +262,22 @@ var game = {
 
     onload : function () { 
         document.addEventListener('DOMContentLoaded', function() {
+        game.loadSounds();
         game.getWord();
         game.execution();
         }, false)
     },
 
-    onkey : function () {
-        document.addEventListener('keyup', function (event) {
+    onkey : function () {      
+    document.addEventListener('keyup', function (event) {
         game.userGuess = event.key;
-        var html = "<p>press any letter to continue</p>" + "<p>Hint: " + game.userHint + "</p>" + "<p>Word: " + game.blankImage +"</p>" + "<p>Guesses Left: " + game.lives + "</p>" + "<p>Used letters: " + game.usedImage + "</p>" + "<p>Wins: " + game.wins + "</p>" + "<p>Losses: " + game.losses + "</p>"; 
+        var html = "<p>Press a letter to play.</p>" + "<p>Hint: " + game.userHint + "</p>" + "<p>Word: " + game.blankImage +"</p>" + "<p>Guesses Left: " + game.lives + "</p>" + "<p>Used letters: " + game.usedImage + "</p>" + "<p>Wins: " + game.wins + "</p>" + "<p>Losses: " + game.losses + "</p>"; 
         document.querySelector("#game").innerHTML = html;
         game.checkMatch();
-        game.checkWin();
         game.execution();
+        game.checkWin();
         }, false)
     },
 }
 game.onload();
 game.onkey();
-

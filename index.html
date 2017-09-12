@@ -7,7 +7,7 @@
     <link rel='stylesheet' type='text/css' href='assets/css/style.css'>
     <title>Hangman: Geographic Edition</title>
 </head>
-<body>
+<body id = bg>
 <div class= 'container'>
     <div class='row'>
         <h1 class='pageheader'>Hangman: Geographic Edition</h1>
@@ -17,11 +17,12 @@
             <div class='row gametext' id='game'>
                 <p>Pick a letter to play</p>
                 <p>Hint: </p> 
-                <p>Word: </p>
+                <p class = "well">Word: </p>
                 <p>Guesses Left: </p>
                 <p>Used letters: </p>
                 <p>Wins: 0</p>
                 <p>Losses: 0</p>
+               
             </div>
         </div>
         <div class='col-md-6 col-sm-12'>
@@ -30,7 +31,11 @@
             </canvas>
         <div>
     </div>
-</div>
+</div> 
+<audio src="assets/sounds/right.mp3" type="audio/mpeg" id="right"></audio>
+<audio src="assets/sounds/wrong.mp3" type="audio/mpeg" id="wrong"></audio>
+<audio src="assets/sounds/correct.mp3" type="audio/mpeg" id="correct"></audio>
+<audio src="assets/sounds/incorrect.mp3" type="audio/mpeg" id="incorrect"></audio>
 <script src='assets/javascript/game.js'></script>
 </body>
 
