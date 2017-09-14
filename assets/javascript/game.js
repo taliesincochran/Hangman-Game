@@ -118,18 +118,6 @@ var game = {
         this.incorrectSound.load();
     },
 
-    //Function to update text after change in all cases but a win or loss
-    // "changeText" : function () {
-    //     var html = "<p>Press any letter to continue</p>" + 
-    //         "<p>Hint: " + this.userHint + "</p>" + 
-    //         "<p>Word: " + this.blankImage +"</p>" + 
-    //         "<p>Guesses Left: " + this.lives + "</p>" + 
-    //         "<p>Used letters: " + this.usedImage + "</p>" + 
-    //         "<p>Wins: " + this.wins + "</p>" + 
-    //         "<p>Losses: " + this.losses + "</p>";
-    //     document.querySelector("#game").innerHTML = html;
-    // },
-
     //Function to get a random word and turn it into blanks
     "getWord" : function () {
         //Choosing the catagory randomly from the associated hint array and setting the hint
@@ -246,7 +234,7 @@ var game = {
         document.getElementById('usedDisp').innerHTML = this.usedImage;
         document.getElementById('winDisp').innerHTML = this.wins;
         document.getElementById('lossDisp').innerHTML = this.losses;
-        document.getElementById('winLossDisp').innerHTML = this.winLoss;
+        document.getElementById('winLossDisp').innerHTML = "";
     },
 
     //Displays on win, adds win to counter and sets flag to false to prevent input 
@@ -303,7 +291,7 @@ var game = {
         document.getElementById('usedDisp').innerHTML = game.usedImage;
         document.getElementById('winDisp').innerHTML = game.wins;
         document.getElementById('lossDisp').innerHTML = game.losses;
-        document.getElementById('winLossDisp').innerHTML = game.winLoss;
+        document.getElementById('winLossDisp').innerHTML = "";
         }, false)
     },
 
