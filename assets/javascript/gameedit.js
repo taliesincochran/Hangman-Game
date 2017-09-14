@@ -9,7 +9,7 @@ var game = {
         "Dallas", "Dayton", "Daytona Beach", "Denton", "Denver", "Des Moines", "Detroit", "Duluth", "Durham", "El Paso", 
         "Elizabeth", "Erie", "Eugene", "Fairfield", "Fargo", "Fayetteville", "Flint", "Fort Collins", "Fort Lauderdale", 
         "Fort Worth", "Frederick", "Fresno", "Gainesville", "Gastonia", "Grand Rapids", "Green Bay", "Greensboro", 
-        "Greenville", "Hampton", "Harrisburg", "Henderson", "Hickory", "High Point", "Hollywood", "Honolulu", "Houston", 
+        "Greenthville", "Hampton", "Harrisburg", "Henderson", "Hickory", "High Point", "Hollywood", "Honolulu", "Houston", 
         "Huntington", "Huntsville", "Indianapolis", "Inglewood", "Irvine", "Irving", "Jackson", "Jacksonville", "Jefferson", 
         "Jersey City", "Johnson City", "Kalamazoo", "Kansas City", "Knoxville", "Lafayette", "Lancaster", "Lansing", "Las Vegas", 
         "Lewisville", "Lexington", "Lincoln", "Little Rock", "Long Beach", "Los Angeles", "Louisville", "Madison", "Memphis", 
@@ -20,7 +20,7 @@ var game = {
         "Richmond", "Roanoke", "Rochester", "Sacramento", "Saint Louis", "Saint Paul", "Salem", "Salt Lake City", "San Antonio", 
         "San Bernardino", "San Diego", "San Francisco", "San Jose", "Santa Ana", "Santa Barbara", "Santa Clara", "Santa Cruz", 
         "Santa Maria", "Santa Rosa", "Sarasota", "Savannah", "Scottsdale", "Scranton", "Seattle", "Sioux City", "Sioux Falls", 
-        "Spartanburg", "Spokane", "Springdale", "Springfield", "Saint Louis", "Saint Paul", "Stockton", "Syracuse", "Tacoma", 
+        "Spartanburg", "Spokane", "Springdale", "Springfield", "St. Louis", "St. Paul", "Stockton", "Syracuse", "Tacoma", 
         "Tallahassee", "Tampa", "Thornton", "Toledo", "Topeka", "Trenton", "Tucson", "Tulsa", "Tuscaloosa", "Utica", 
         "Virginia Beach", "Waco", "Washington", "Waterloo", "Westminster", "Wichita", "Wilmington", "Winston", "Worcester", 
         "Yonkers", "York", "Youngstown"],
@@ -29,20 +29,21 @@ var game = {
         "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", 
         "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", 
         "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Cayman Islands", "Chad", "Chile", "China", 
-        "Colombia", "Congo", "Cook Islands", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", 
-        "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Fiji", "Finland", 
-        "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea Bissau", 
-        "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", 
-        "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", 
-        "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", 
-        "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", 
-        "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", 
-        "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", 
-        "Romania", "Russia", "Rwanda", "Samoa", "San Marino", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", 
-        "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", 
-        "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "East Timor", "Togo", "Tonga", 
-        "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos", "Uganda", "Ukraine", "United Arab Emirates", 
-        "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"],
+        "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cruise Ship", "Cuba", "Cyprus", 
+        "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", 
+        "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", 
+        "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", 
+        "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", 
+        "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", 
+        "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", 
+        "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "New Zealand", 
+        "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", 
+        "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Samoa", "San Marino", "Saudi Arabia", "Senegal", 
+        "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "South Sudan", 
+        "Spain", "Sri Lanka", "St Kitts and Nevis", "St Lucia", "St Vincent", "St. Lucia", "Sudan", "Suriname", "Swaziland", "Sweden", 
+        "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "East Timor", "Togo", "Tonga", "Trinidad and Tobago", 
+        "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", 
+        "Uzbekistan", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"],
 
     "usStates" : ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia",  
         "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", 
@@ -100,6 +101,13 @@ var game = {
     "userGuess" : "",
     "tempWord": "",
     "hmImage": document.getElementById('hangedMan'),
+    "hintImage": document.getElementById('hintDisp'),
+    "wordImage": document.getElementById('wordDisp'),
+    "guessImage": document.getElementById('guessDisp'),
+    "usedLettersImage": document.getElementById('usedDisp'),
+    "winImage": document.getElementById('winDisp'),
+    "lossImage": document.getElementById('lossDisp'),
+    "winlossImage": document.getElementById('winLossDisp'),
 
     // flag to stop input if false
     "flag" : true,
@@ -135,8 +143,8 @@ var game = {
         //Choosing the catagory randomly from the associated hint array and setting the hint
         var catagoryChoosen = this.hints[Math.floor(Math.random() * this.hints.length)];
         this.userHint = this.hints[this.hints.indexOf(catagoryChoosen)]; 
-        document.getElementById('hintDisp').innerHTML = this.userHint;
-        
+        this.hintImage = this.userHint
+        document.getElementById('hintDisp') = hintImage;
         //Picking the random word from the choosen catagory and change the background
         if (catagoryChoosen === this.hints[0]) {
             this.tempWord= this.usCities[Math.floor(Math.random() * this.usCities.length)];
@@ -169,9 +177,9 @@ var game = {
                 this.blankWord.push("&nbsp;");
             }
         }
-        this.blankImage = this.blankWord.join("&nbsp;");
-        document.getElementById('wordDisp').innerHTML = this.blankImage;
-    
+        this.blankImage = this.blankWord.join ("&nbsp;");
+        this.changeText();
+        document.getElementById('hintDisp') = blankImage;
     },
 
     //Function to draw body as guesses fail
@@ -197,6 +205,7 @@ var game = {
                 break;
             case 0:
                 this.hmImage.src = "assets/images/hangman0.png";
+
                 break;
         }
     },
@@ -215,45 +224,37 @@ var game = {
                 this.blankImage = this.blankWord.join(" ");
                 testWord = this.blankWord.join ("");  
                 this.correctSound.play();
-                document.getElementById('wordDisp').innerHTML = this.blankImage;
                 }
         } else if (rwIndex === -1 && ulIndex === -1) {
                 this.usedLetters.push(uGuess);
                 this.usedImage = this.usedLetters.join(',');
                 this.lives--;
                 this.incorrectSound.play();
-                document.getElementById('guessDisp').innerHTML =game.lives;
-                document.getElementById('usedDisp').innerHTML = game.usedImage;
-                console.log(this);
             }
-            
+            this.changeText();
     },
 
     //Function to reset variables.
     "clearWord" : function () {
-        this.randomWord = "";
-        this.usedLetters = [];
-        this.userHint = "";
-        this.blankWord = [];
-        this.blankImage = "";
-        this.usedLetters = [];
-        this.usedImage = "";
-        this.lives = 6; 
-        this.tempWord = "";
-        document.getElementById('hintDisp').innerHTML = this.userHint;
-        document.getElementById('wordDisp').innerHTML = this.blankImage;
-        document.getElementById('guessDisp').innerHTML =this.lives;
-        document.getElementById('usedDisp').innerHTML = this.usedImage;
-        document.getElementById('winDisp').innerHTML = this.wins;
-        document.getElementById('lossDisp').innerHTML = this.losses;
-        document.getElementById('winLossDisp').innerHTML = this.winLoss;
+            this.randomWord = "";
+            this.usedLetters = [];
+            this.userHint = "";
+            this.blankWord = [];
+            this.blankImage = "";
+            this.usedLetters = [];
+            this.usedImage = "";
+            this.lives = 6;
+            this.changeText(); 
+            this.tempWord = "";
     },
 
     //Displays on win, adds win to counter and sets flag to false to prevent input 
      "youWin" : function () {
         this.wins++; 
-        document.getElementById('winDisp').innerHTML = game.wins;
-        document.getElementById('winLossDisp').innerHTML = "<h1>You Win!</h1>" + "<p>The " + this.userHint + " was " + this.tempWord +"</p>" 
+        var html = "";
+        document.querySelector("#game").innerHTML = html;
+        var html = "<h1>You Win!</h1>" + "<p>The "+ this.userHint + " was " + this.tempWord +"</p>";
+        document.querySelector("#game").innerHTML = html;
         this.rightSound.play();
         this.flag = false;
         window.setTimeout(this.restart, 1000);
@@ -263,8 +264,10 @@ var game = {
     //Displays on loss, adds loss to counter and sets flag to false to prevent input
     "onLose" : function () {
         this.losses++;
-        document.getElementById('lossDisp').innerHTML = game.losses;
-        document.getElementById('winLossDisp').innerHTML = "<h1>You Lose!</h1>" + "<p>The " + this.userHint + " was " + this.tempWord +"</p>";
+        var html = "";
+        document.querySelector("#game").innerHTML = html;
+        html = "<h1>You Lose!</h1>" + "<p>The " + this.userHint + " was " + this.tempWord +"</p>" 
+        document.querySelector("#game").innerHTML = html;
         this.wrongSound.play();
         this.flag = false
         window.setTimeout(this.restart, 1000)
@@ -297,13 +300,6 @@ var game = {
         game.loadSounds();
         game.getWord();
         game.execution();
-        document.getElementById('hintDisp').innerHTML = game.userHint;
-        document.getElementById('wordDisp').innerHTML = game.blankImage;
-        document.getElementById('guessDisp').innerHTML =game.lives;
-        document.getElementById('usedDisp').innerHTML = game.usedImage;
-        document.getElementById('winDisp').innerHTML = game.wins;
-        document.getElementById('lossDisp').innerHTML = game.losses;
-        document.getElementById('winLossDisp').innerHTML = game.winLoss;
         }, false)
     },
 
@@ -312,6 +308,10 @@ var game = {
         document.addEventListener('keyup', function (event) {
             if (game.flag === true) {
                 game.userGuess = event.key;
+                var html = "<p>Press a letter to play.</p>" + "<p>Hint: " + game.userHint + "</p>" + "<p>Word: " + game.blankImage +"</p>" + 
+                "<p>Guesses Left: " + game.lives + "</p>" + "<p>Used letters: " + game.usedImage + "</p>" + "<p>Wins: " + game.wins + "</p>" + 
+                "<p>Losses: " + game.losses + "</p>"; 
+                document.querySelector("#game").innerHTML = html;
                 game.checkMatch();
                 game.execution();
                 game.checkWin();
