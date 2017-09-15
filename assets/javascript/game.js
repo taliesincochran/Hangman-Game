@@ -198,7 +198,9 @@ var game = {
         if (letInc === false) {
             console.log("not a valid guess");
         } else if (rwIndex !== -1) {       
+            //This looks at each letter to see if it is a match. 
             for (i = 0; this.randomWord.indexOf(uGuess, i) !== -1; i++) {
+                //this.randomWord.indexOf(uGuess, i) !== -1 returns false if there are no more matching letters in the word after randomWord[i]
                 this.blankWord.splice(this.randomWord.indexOf(uGuess, i), 1, uGuess);
                 this.blankImage = this.blankWord.join(" ");
                 testWord = this.blankWord.join ("");  
