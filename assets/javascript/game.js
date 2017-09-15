@@ -204,16 +204,15 @@ var game = {
                 testWord = this.blankWord.join ("");  
                 this.correctSound.play();
                 document.getElementById('wordDisp').innerHTML = this.blankImage;
-                }
-        } else if (rwIndex === -1 && ulIndex === -1) {
-                this.usedLetters.push(uGuess);
-                this.usedImage = this.usedLetters.join(',');
-                this.lives--;
-                this.incorrectSound.play();
-                document.getElementById('guessDisp').innerHTML =game.lives;
-                document.getElementById('usedDisp').innerHTML = game.usedImage;
-                console.log(this);
             }
+        } else if (rwIndex === -1 && ulIndex === -1) {
+            this.usedLetters.push(uGuess);
+            this.usedImage = this.usedLetters.join(',');
+            this.lives--;
+            this.incorrectSound.play();
+            document.getElementById('guessDisp').innerHTML =game.lives;
+            document.getElementById('usedDisp').innerHTML = game.usedImage;
+        }
             
     },
 
@@ -240,7 +239,7 @@ var game = {
     //Displays on win, adds win to counter and sets flag to false to prevent input 
      "youWin" : function () {
         this.wins++; 
-        document.getElementById('winDisp').innerHTML = game.wins;
+        document.getElementById('winDisp').innerHTML = this.wins;
         document.getElementById('winLossDisp').innerHTML = "<h1>You Win!</h1>" + "<p>The " + this.userHint + " was " + this.tempWord +"</p>" 
         this.rightSound.play();
         this.flag = false;
@@ -251,7 +250,7 @@ var game = {
     //Displays on loss, adds loss to counter and sets flag to false to prevent input
     "onLose" : function () {
         this.losses++;
-        document.getElementById('lossDisp').innerHTML = game.losses;
+        document.getElementById('lossDisp').innerHTML = this.losses;
         document.getElementById('winLossDisp').innerHTML = "<h1>You Lose!</h1>" + "<p>The " + this.userHint + " was " + this.tempWord +"</p>";
         this.wrongSound.play();
         this.flag = false
@@ -303,8 +302,7 @@ var game = {
                 game.checkMatch();
                 game.execution();
                 game.checkWin();
-            }
-            else {
+            } else {
                 console.log('Input is not allowed.')   
             }
         }, false)
